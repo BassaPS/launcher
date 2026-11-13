@@ -60,11 +60,11 @@ export default function CloseModal({
                             className="btn btn-primary border-none shadow-sm   transition-shadow"
                             onClick={async () => {
                                 onClose()
-                                const [success, message] = await AppService.HideApp()
-                                if (!success) toast.error(message)
                                 if (!closingOption.isAsk) {
                                     setClosingOption({ isMinimize: true, isAsk: false })
                                 }
+                                const [success, message] = await AppService.HideApp()
+                                if (!success) toast.error(message)
                             }}
                         >
                             {t("close.minimize")}
@@ -73,11 +73,11 @@ export default function CloseModal({
                             className="btn bg-base-100 hover:bg-error/10 border border-error/30 text-error hover:text-error hover:border-error/30 transition-all"
                             onClick={async () => {
                                 onClose()
-                                const [success, message] = await AppService.CloseApp()
-                                if (!success) toast.error(message)
                                 if (!closingOption.isAsk) {
                                     setClosingOption({ isMinimize: false, isAsk: false })
                                 }
+                                const [success, message] = await AppService.CloseApp()
+                                if (!success) toast.error(message)
                             }}
                         >
                             {t("close.close")}

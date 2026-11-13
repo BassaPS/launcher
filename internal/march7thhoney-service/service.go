@@ -24,12 +24,15 @@ import (
 	"cyrene-launcher/pkg/constant"
 	"cyrene-launcher/pkg/injector"
 	patchproxy "cyrene-launcher/pkg/patch-proxy"
+	"cyrene-launcher/pkg/srtoolsrelay"
 	"errors"
 	"fmt"
 	"net"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
+	"sync"
 	"time"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
@@ -47,8 +50,11 @@ const (
 // March7thHoneyService is constructed via New so the embedded CyreneHook.dll
 // bytes can be supplied from main.
 type March7thHoneyService struct {
-	dllBytes []byte
-	acct     *accountService.AccountService
+	relayMu     sync.Mutex
+	relay       *srtoolsrelay.Relay
+	relayTarget string
+	dllBytes    []byte
+	acct        *accountService.AccountService
 }
 
 // New returns a service that will extract the given DLL bytes to
@@ -263,4 +269,40 @@ func waitPort(addr string, timeout time.Duration) bool {
 		time.Sleep(500 * time.Millisecond)
 	}
 	return false
+}
+
+// StartSRToolsRelay provides browser access to the selected server without the
+// external website's unavailable server-side proxy. Account data is never saved.
+func (m *March7thHoneyService) StartSRToolsRelay(serverURL string) (bool, string, string) {
+	m.relayMu.Lock()
+	defer m.relayMu.Unlock()
+	serverURL = strings.TrimSpace(serverURL)
+	if serverURL == "" {
+		serverURL = constant.DefaultPatchTargetURL
+	}
+	if m.relay != nil && m.relayTarget == serverURL {
+		return true, m.relay.URL(), ""
+	}
+	next, err := srtoolsrelay.Start(serverURL)
+	if err != nil {
+		return false, "", err.Error()
+	}
+	if m.relay != nil {
+		_ = m.relay.Close()
+	}
+	m.relay, m.relayTarget = next, serverURL
+	return true, next.URL(), ""
+}
+
+// ServiceShutdown closes the loopback listener on launcher shutdown.
+func (m *March7thHoneyService) ServiceShutdown() error {
+	m.relayMu.Lock()
+	defer m.relayMu.Unlock()
+	if m.relay == nil {
+		return nil
+	}
+	err := m.relay.Close()
+	m.relay = nil
+	m.relayTarget = ""
+	return err
 }

@@ -8,8 +8,21 @@ import useModalStore from "@/stores/modalStore";
 import useDiffStore from "@/stores/diffStore";
 import useLauncherStore from "@/stores/launcherStore";
 
+export async function requestWindowClose() {
+    const option = useSettingStore.getState().closingOption;
+    if (option.isAsk) {
+        useModalStore.getState().setIsOpenCloseModal(true);
+        return;
+    }
+    try {
+        const [success, message] = await (option.isMinimize ? AppService.HideApp() : AppService.CloseApp());
+        if (!success) toast.error(message);
+    } catch {
+        toast.error("ウィンドウを閉じられませんでした");
+    }
+}
+
 export function useGlobalEvents() {
-    const { setIsOpenCloseModal } = useModalStore()
     const { setGameRunning, setServerRunning, setProgressDownload, setDownloadSpeed } = useLauncherStore()
     const { setProgressUpdate, setMaxProgressUpdate, setMessageUpdate, setStageType } = useDiffStore()
 
@@ -51,20 +64,7 @@ export function useGlobalEvents() {
             const { message } = event.data;
             toast.error(message);
         });
-        Events.On("window:close", async () => {
-            const option = useSettingStore.getState().closingOption
-            if (option.isAsk) {
-                setIsOpenCloseModal(true);
-                return
-            } 
-            if (option.isMinimize) {
-                const [success, message] = await AppService.MinimizeApp()
-                if (!success) toast.error(message)
-            } else {
-                const [success, message] = await AppService.CloseApp()
-                if (!success) toast.error(message)
-            }
-        });
+        Events.On("window:close", requestWindowClose);
 
         return () => {
             Events.Off("download:server");

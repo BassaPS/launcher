@@ -2,6 +2,7 @@ package consoleService
 
 import (
 	"bytes"
+	"cyrene-launcher/pkg/constant"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -27,7 +28,7 @@ func (c *ConsoleService) authorize() error {
 	return c.authorizer.AuthorizeAdmin()
 }
 
-const defaultServerURL = "https://hsr.bassaps.com"
+const defaultServerURL = constant.DefaultPatchTargetURL
 
 type execRequest struct {
 	Username string `json:"username"`

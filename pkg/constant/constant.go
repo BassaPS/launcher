@@ -25,7 +25,7 @@ const GenshinServerManifest = "./server-packages/Columbina-GI/cyrene-manifest.js
 // The patch is implemented as a Go-native HTTPS MITM proxy (pkg/patch-proxy).
 // No DLL download or injection is required. The proxy intercepts miHoYo-domain
 // traffic and forwards it to DefaultPatchTargetURL (or a user-configured URL).
-const DefaultPatchTargetURL = "https://hsr.bassaps.com"
+const DefaultPatchTargetURL = "http://hsr.bassaps.com:21000"
 
 // SourceGenshin is the downloadable Genshin server package source.
 const SourceGenshin = "genshin"
@@ -78,7 +78,7 @@ const AnnouncementUrl = WebBaseURL + "/api/launcher/news"
 // Project metadata for the About section
 const ProjectName = "BASSAPS Launcher"
 const ProjectAuthor = "Firefly Shelter (original) · Cyrene (fork)"
-const ProjectRepoUrl = "https://github.com/Mar7thDev/CyreneLauncher"
+const ProjectRepoUrl = "https://github.com/BassaPS/bassaPSLauncher"
 
 type ToolFile string
 

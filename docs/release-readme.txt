@@ -7,7 +7,7 @@
 
 Windows x64とMicrosoft Edge WebView2 Runtimeが必要です。
 ゲーム本体・ローカルサーバー・アカウント情報は同梱していません。
-標準のゲーム接続先: https://hsr.bassaps.com
+標準のゲーム接続先: http://hsr.bassaps.com:21000
 登録・認証ポータル: https://register.bassaps.com
 
 既存のゲームフォルダーやサーバー設定を上書きしないでください。
@@ -19,7 +19,16 @@ Cyrene Launcher / Mar7thDev をベースにしています。
 Copyright (c) 2025 Firefly Shelter
 MITの全文はLICENSE、UIライブラリのライセンスはlicenses/に同梱しています。
 
-Source: https://github.com/bassa-4508/bassaPSLauncher
+Source: https://github.com/BassaPS/bassaPSLauncher
 Upstream: https://github.com/Mar7thDev/CyreneLauncher
 
 この配布物は署名されていません。配布元とSHA256SUMS.txtを確認してください。
+
+## SRTools / SRAnalysis
+
+SRToolsの公開接続はランチャーのローカル中継と「March7thHoney」を使用します。
+SRAnalysisはゲーム端末のVeritasプラグインへ「Native」で接続します（http://localhost:1305）。リモートのゲームサーバーURLをSocket.IO接続先には指定しません。プラグインは同梱していません。
+各ツール画面の「BASSAPS接続設定」も確認してください。
+
+
+SRToolsの502対策: 「ローカル中継を開始」→「March7thHoney」→ 表示されたURL。末尾 /sr-tools は不要です。ユーザー名は数字のゲームUIDを使用します。

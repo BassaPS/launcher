@@ -44,6 +44,10 @@ export default function AboutPage() {
             <dd>MIT License</dd>
           </div>
         </dl>
+        <button className="btn btn-sm btn-outline" onClick={() => AppService.OpenURL("https://github.com/BassaPS/bassaPSLauncher")}>
+          <ExternalLink size={14} />
+          BassaPS LauncherをGitHubで見る
+        </button>
         <button className="btn btn-sm btn-outline" onClick={openSource}>
           <ExternalLink size={14} />
           元プロジェクトをGitHubで見る

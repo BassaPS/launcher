@@ -50,3 +50,11 @@ export function Start(gamePath: string, targetURL: string, preferredPort: number
 export function StartLocalServer(mode: string): $CancellablePromise<[boolean, string]> {
     return $Call.ByID(720074128, mode);
 }
+
+/**
+ * StartSRToolsRelay provides browser access to the selected server without the
+ * external website's unavailable server-side proxy. Account data is never saved.
+ */
+export function StartSRToolsRelay(serverURL: string): $CancellablePromise<[boolean, string, string]> {
+    return $Call.ByID(2936009329, serverURL);
+}

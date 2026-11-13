@@ -5,11 +5,11 @@ Cyrene Launcherをベースにした、Go / Wails v3 / React製のゲームラ�
 
 ## UIと接続先
 
-- ダークテーマ、ミントのアクセント、常設サイドバーを採用。
-- ゲームとコンソールの標準接続先: `https://hsr.bassaps.com`。
-- Webアカウント・ニュースの接続先も同一ホスト。
+- ライト／ダーク／OS連動テーマ、ニュートラルな配色、レスポンシブなサイドバーを採用。
+- ゲームとコンソールの標準接続先: `http://hsr.bassaps.com:21000`。
+- Webアカウント・登録・ニュースは `https://register.bassaps.com` に接続します。ゲーム用のHTTP URLとは別です。
 - ローカル環境・カスタム接続先と既存の保存設定は維持。
-- 一般ユーザー向け登録画面は、ブラウザーで `https://hsr.bassaps.com/register` を開きます。パスワードをランチャーに保存しません。
+- 一般ユーザー向け登録画面は、ブラウザーで `https://register.bassaps.com/register` を開きます。パスワードをランチャーに保存しません。
 
 ## アカウントサーバーとの連携条件
 
@@ -92,3 +92,10 @@ Magic UI / ObsidianUIの公式レジストリから必要なソースを取り�
 Go（go.mod指定版）、Node.js、npm、GitがPATHにあるWindowsで `scripts/build-release.ps1 -RunUiTests` を実行します。初回のみ `cd frontend; npx.cmd playwright install chromium` が必要です。Wails CLIはgo.modで固定したバージョンを使用します。
 
 `bin/release/` に実行ファイル、ライセンス入りZIP、SHA256SUMS.txt、GitHubへ貼り付けるRELEASE_NOTES.mdを生成します。ビルドしたコミットと作業ツリーの変更有無はZIP内のBUILD-INFO.txtに記録されます。ゲーム・サーバー・アカウント・個人設定は含めません。Releaseへのアップロードや公開は別操作です。
+
+## SRTools / SRAnalysisの接続
+
+ツール画面に接続先コピー・接続方式・Veritasの配置確認を追加しました。公開SRToolsはランチャーのローカル中継を使います。SRAnalysisはゲーム端末のNative接続を使います。詳細と検証範囲は [外部ツール接続手順](docs/tool-connections.md) を参照してください。
+
+
+SRToolsの502対策: 「ローカル中継を開始」→「March7thHoney」→ 表示されたURL。末尾 /sr-tools は不要です。ユーザー名は数字のゲームUIDを使用します。

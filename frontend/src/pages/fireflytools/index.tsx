@@ -1,3 +1,4 @@
+import ToolConnection from "@/components/toolConnection";
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 
@@ -7,6 +8,7 @@ export default function FireflyToolsPage() {
     return (
         <div className="min-h-screen bg-base-200 flex items-center justify-center p-6">
             <div className="w-full bg-base-100 shadow-sm rounded-lg p-8 space-y-8">
+                <ToolConnection tool="srtools" />
                 <h1 className="text-xl font-bold text-base-content text-center">{t("fireflytools.title")}</h1>
 
                 <div className="bg-base-200 border-l-4 border-base-300 p-6 rounded-r-lg">

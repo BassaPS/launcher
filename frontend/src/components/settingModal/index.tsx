@@ -8,8 +8,8 @@ import { useTranslation } from "react-i18next"
 import { ExternalLink } from "lucide-react"
 
 const PROJECT_NAME = "BASSAPS Launcher"
-const PROJECT_AUTHOR = "Firefly Shelter (original) · Cyrene (fork)"
-const PROJECT_REPO_URL = "https://github.com/Mar7thDev/CyreneLauncher"
+const PROJECT_AUTHOR = "Firefly Shelter (original) · BassaPS (fork)"
+const PROJECT_REPO_URL = "https://github.com/BassaPS/bassaPSLauncher"
 
 export default function SettingModal({
     isOpen,
@@ -97,7 +97,7 @@ export default function SettingModal({
                                         value={serverTarget}
                                         onChange={e => setServerTarget(e.target.value as ServerTarget)}
                                     >
-                                        <option value="hoyotoon">BASSAPS / hsr.bassaps.com</option>
+                                        <option value="hoyotoon">BASSAPS / hsr.bassaps.com:21000</option>
                                         <option value="local_test">{t("setting.server_target_local_test")}</option>
                                         <option value="local_prod">{t("setting.server_target_local_prod")}</option>
                                         <option value="custom">{t("setting.server_target_custom")}</option>

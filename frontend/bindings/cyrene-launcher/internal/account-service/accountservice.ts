@@ -9,6 +9,14 @@ import { Call as $Call, CancellablePromise as $CancellablePromise, Create as $Cr
 // @ts-ignore: Unused imports
 import * as $models from "./models.js";
 
+/**
+ * AuthorizeAdmin revalidates privileges remotely for every console operation.
+ * Never authorize using a frontend role or the cached startup profile.
+ */
+export function AuthorizeAdmin(): $CancellablePromise<void> {
+    return $Call.ByID(1467786098);
+}
+
 export function CancelLogin(): $CancellablePromise<void> {
     return $Call.ByID(3770370519);
 }

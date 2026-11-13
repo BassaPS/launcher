@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "@tanstack/react-router";
+import { requestWindowClose } from "@/hooks/useGlobalEvents";
 import ThemeSelect from "../themeSelect";
 import { Link } from "@tanstack/react-router";
 import {
@@ -23,7 +24,7 @@ import AccountButton from "../accountButton";
 import LanguageSwitcher from "../languageSwitcher";
 
 export default function Header() {
-  const { setIsOpenSettingModal, setIsOpenCloseModal } = useModalStore();
+  const { setIsOpenSettingModal } = useModalStore();
   const isAdmin = useAccountStore((s) => s.user?.role === "admin");
   const isStarRail = useSettingStore((s) => s.gameProfile === "starrail");
   const mobileMenu = useRef<HTMLDialogElement>(null);
@@ -112,7 +113,7 @@ export default function Header() {
           <button aria-label="最小化" onClick={() => AppService.MinimizeApp()}>
             <Minus size={17} />
           </button>
-          <button aria-label="閉じる" onClick={() => setIsOpenCloseModal(true)}>
+          <button aria-label="閉じる" onClick={requestWindowClose}>
             <X size={17} />
           </button>
         </div>
@@ -122,7 +123,7 @@ export default function Header() {
         {navigation()}
         <div className="bassaps-sidebar-footer">
           <span className="bassaps-eyebrow">標準接続先</span>
-          <strong>hsr.bassaps.com</strong>
+          <strong>hsr.bassaps.com:21000</strong>
           <Credits />
         </div>
       </aside>

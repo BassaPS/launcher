@@ -4,7 +4,7 @@
 async function mockDesktop(page: Page, signedIn = true, serverNews: unknown[] = []) {
   await page.addInitScript(() => {
     localStorage.setItem("i18nextLng", "ja");
-    localStorage.setItem(
+    if (!localStorage.getItem("setting-storage")) localStorage.setItem(
       "setting-storage",
       JSON.stringify({
         version: 1,
@@ -232,4 +232,72 @@ test("optimized cover falls back to the existing JPEG if WebP is unavailable", a
   await expect
     .poll(() => cover.evaluate((image: HTMLImageElement) => image.naturalWidth))
     .toBeGreaterThan(0);
+});
+
+test('default game launch uses the requested HTTP host and port', async ({ page }) => {
+  await mockDesktop(page);
+  let target = '';
+  await page.route('**/wails/runtime**', async route => {
+    const body = route.request().method() === 'POST' ? route.request().postDataJSON() : null;
+    if (body?.args?.methodID !== 3347991480) return route.fallback();
+    target = body.args.args[1];
+    return route.fulfill({json:[true,'']});
+  });
+  await page.goto('/');
+  await page.getByRole('button',{name:'ゲーム開始',exact:true}).click();
+  await expect.poll(() => target).toBe('http://hsr.bassaps.com:21000');
+  await expect(page.getByRole('button',{name:'実行中',exact:true})).toBeDisabled();
+});
+
+test('SRTools remote mode includes its API path and native analysis stays on the game PC', async ({ page }) => {
+  await mockDesktop(page);
+  await page.goto('/srtools');
+  await page.route('**/wails/runtime**', async route => {
+    const body = route.request().method() === 'POST' ? route.request().postDataJSON() : null;
+    if (body?.args?.methodID !== 2936009329) return route.fallback();
+    expect(body.args.args[0]).toBe('http://hsr.bassaps.com:21000');
+    return route.fulfill({json:[true,'http://127.0.0.1:24680','']});
+  });
+  await page.getByRole('button',{name:'ローカル中継を開始'}).click();
+  await expect(page.getByTestId('srtools-endpoint')).toHaveText('http://127.0.0.1:24680');
+  await expect(page.getByRole('region',{name:'BASSAPS SRTools接続設定'})).toContainText('数字のゲームUID');
+  await page.goto('/analysis');
+  const panel = page.getByRole('region',{name:'BASSAPS SRAnalysis接続設定'});
+  await expect(panel).toContainText('Native');
+  await expect(panel).toContainText('http://localhost:1305');
+  await expect(panel).toContainText('配置の確認のみ');
+});
+
+test('local M7H configuration keeps direct March7thHoney mode', async ({ page }) => {
+  await mockDesktop(page);
+  await page.addInitScript(() => {
+    const saved = JSON.parse(localStorage.getItem('setting-storage')!);
+    saved.state.serverTarget = 'local_test';
+    localStorage.setItem('setting-storage',JSON.stringify(saved));
+  });
+  await page.goto('/srtools');
+  await expect(page.getByTestId('srtools-endpoint')).toHaveText('http://127.0.0.1:21000');
+  await expect(page.getByRole('region',{name:'BASSAPS SRTools接続設定'})).toContainText('March7thHoney');
+});
+
+
+test('titlebar close remembers the selected action after reload', async ({ page }) => {
+  await mockDesktop(page);
+  let hideCount = 0;
+  await page.route('**/wails/runtime**', async route => {
+    const body = route.request().method() === 'POST' ? route.request().postDataJSON() : null;
+    if (body?.args?.methodID !== 2658494055) return route.fallback();
+    hideCount++;
+    return route.fulfill({json:[true,'']});
+  });
+  await page.goto('/');
+  await page.getByRole('button',{name:'閉じる',exact:true}).first().click();
+  const dialog = page.locator('dialog.bassaps-modal-frame[open]');
+  await dialog.locator('#dontAskAgain').check();
+  await dialog.getByRole('button',{name:'最小化',exact:true}).click();
+  await expect.poll(() => hideCount).toBe(1);
+  await page.reload();
+  await page.getByRole('button',{name:'閉じる',exact:true}).first().click();
+  await expect.poll(() => hideCount).toBe(2);
+  await expect(page.locator('dialog.bassaps-modal-frame[open]')).toHaveCount(0);
 });
