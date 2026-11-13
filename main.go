@@ -14,6 +14,7 @@ import (
 	languageService "cyrene-launcher/internal/language-service"
 	march7thHoneyService "cyrene-launcher/internal/march7thhoney-service"
 	newsService "cyrene-launcher/internal/news-service"
+	platformService "cyrene-launcher/internal/platform-service"
 
 	"cyrene-launcher/pkg/constant"
 	"cyrene-launcher/pkg/elevation"
@@ -116,6 +117,7 @@ func main() {
 			application.NewService(&handbookService.HandbookService{}),
 			application.NewService(march7thHoneyService.New(dllBytes, acct)),
 			application.NewService(acct),
+			application.NewService(platformService.New()),
 		},
 		Assets: application.AssetOptions{
 			Handler: application.AssetFileServerFS(assets),

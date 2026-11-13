@@ -14,7 +14,7 @@ export default [
     ],
   },
   {
-    files: ["src/**/*.{ts,tsx}", "e2e/**/*.ts"],
+    files: ["src/**/*.{ts,tsx}", "e2e/**/*.ts", "e2e-platform/**/*.{ts,tsx}", "playwright.platform.config.ts"],
     languageOptions: {
       parser,
       parserOptions: {

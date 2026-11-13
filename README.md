@@ -99,3 +99,21 @@ Go（go.mod指定版）、Node.js、npm、GitがPATHにあるWindowsで `scripts
 
 
 SRToolsの502対策: 「ローカル中継を開始」→「March7thHoney」→ 表示されたURL。末尾 /sr-tools は不要です。ユーザー名は数字のゲームUIDを使用します。
+
+## 公開Status・Release情報サービス
+
+PlatformServiceは固定のStatus APIとDownload latest APIを匿名GETで取得し、表示用DTOを返します。Goの呼出しcontext、10秒timeout、1MiB本文上限、redirect拒否、JSON・日時・URL検証を適用します。endpointごとの進行中HTTPを共有し、最後の呼出しのキャンセルとServiceShutdownで通信を終了します。OS環境proxyはHTTP_PROXY/HTTPS_PROXY/NO_PROXYに従います。
+
+usePlatformInfoはconsumer間で取得を共有し、Statusの60秒再確認、visibilitychange、観測・Releaseの期限再評価を管理します。ReleaseのassetStateはnot_provided / none / availableを区別します。インストール版は既存GetCurrentLauncherVersionから取得します。ホーム・Aboutへの配置はPhase 4B-3で扱います。
+
+以下の追加試験は、非秘密ソースだけをコピーした隔離環境のfrontendディレクトリで実行します。通常のproduction buildは標準index.htmlをentryにします。
+
+```powershell
+node --test e2e-platform/presentation.test.ts
+node node_modules/eslint/bin/eslint.js e2e-platform playwright.platform.config.ts --max-warnings 0
+$env:ISOLATED_PLATFORM_TESTS = '1'
+node e2e-platform/build-harness.mjs
+npx.cmd playwright test --config playwright.platform.config.ts
+```
+
+Go側は隔離コピーのルートで `go test ./internal/platform-service -count=1`、全体回帰は既存の `go test ./...` と `scripts/build-release.ps1 -RunUiTests` を使用します。依存のセキュリティ対応はPhase 4B-4S、実Windows/WebView2確認は後続の承認対象です。
