@@ -1,6 +1,6 @@
 import { AppService } from '@bindings/cyrene-launcher/internal/app-service';
 import { PlatformService } from '@bindings/cyrene-launcher/internal/platform-service';
-import { nextReleaseEvaluation, nextStatusEvaluation, releaseAge, statusAge, type Age } from './presentation';
+import { maxTimerDelayMs, nextReleaseEvaluation, nextStatusEvaluation, releaseAge, statusAge, type Age } from './presentation';
 
 export interface ResourceState<T> {
   phase: 'loading' | 'success' | 'stale' | 'unavailable';
@@ -48,7 +48,7 @@ function createResource<T>(
     clearTimeout(expiry);
     if (data === null || !active || document.hidden) return;
     const next = nextEvaluation(data, Date.now());
-    if (next !== undefined) expiry = setTimeout(() => { emit(); scheduleExpiry(); }, Math.max(0, next - Date.now()));
+    if (next !== undefined) expiry = setTimeout(() => { emit(); scheduleExpiry(); }, Math.min(maxTimerDelayMs, Math.max(0, next - Date.now())));
   }
 
   async function refresh() {
@@ -91,7 +91,7 @@ function createResource<T>(
     scheduleExpiry();
     if (pollMs !== undefined || data === null) {
       const cooldown = pollMs ?? 60_000;
-      wake = setTimeout(() => void refresh(), Math.max(0, cooldown - (Date.now() - lastActivity)));
+      wake = setTimeout(() => void refresh(), Math.min(maxTimerDelayMs, Math.max(0, cooldown - (Date.now() - lastActivity))));
     }
   }
 

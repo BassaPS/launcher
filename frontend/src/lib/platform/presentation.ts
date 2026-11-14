@@ -4,6 +4,7 @@ export const statusFreshMs = 450_000;
 export const clockSkewMs = 60_000;
 export const releaseFreshMs = 600_000;
 export const releaseRetentionMs = 7 * 86_400_000;
+export const maxTimerDelayMs = 2_147_483_647;
 export const primaryServices = [
   { id: 'portal', monitoringType: 'http' },
   { id: 'account', monitoringType: 'http' },
@@ -59,7 +60,7 @@ export function releaseAge(data: ReleaseSnapshot, now: number): Age {
 
 function nextTime(times: number[], now: number): number | undefined {
   const future = times.filter(time => Number.isFinite(time) && time > now);
-  return future.length ? Math.min(...future) : undefined;
+  return future.length ? Math.min(...future, now + maxTimerDelayMs) : undefined;
 }
 
 export function nextStatusEvaluation(data: StatusSnapshot, now: number): number | undefined {

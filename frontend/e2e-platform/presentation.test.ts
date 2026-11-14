@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   primaryServices, serviceView, snapshotStatus, releaseAge, nextStatusEvaluation,
-  nextReleaseEvaluation, statusFreshMs, releaseFreshMs, releaseRetentionMs,
+  nextReleaseEvaluation, statusFreshMs, releaseFreshMs, releaseRetentionMs, maxTimerDelayMs,
 } from '../src/lib/platform/presentation.ts';
 
 const now = Date.parse('2026-11-13T12:00:00.000Z');
@@ -75,4 +75,17 @@ test('release freshness and retention boundaries preserve provider timestamp', (
   release.stale = true;
   assert.equal(releaseAge(release, now), 'stale');
   assert.equal(release.fetchedAt, time);
+});
+
+test('distant timestamps stay within the browser timer limit', () => {
+  const data = snapshot();
+  const future = '2099-01-01T00:00:00.000Z';
+  data.generatedAt = future;
+  data.updatedAt = future;
+  for (const service of data.services) service.lastCheckedAt = future;
+  assert.equal(snapshotStatus(data, now), 'unknown');
+  assert.equal(nextStatusEvaluation(data, now), now + maxTimerDelayMs);
+  const release = { latest: null, recommendedAsset: null, assetState: 'none', fetchedAt: future, stale: false, downloadUrl: 'https://download.bassaps.com/' };
+  assert.equal(releaseAge(release, now), 'expired');
+  assert.equal(nextReleaseEvaluation(release, now), now + maxTimerDelayMs);
 });
