@@ -35,7 +35,16 @@ Goの `Execute` と `SelfReset` も、毎回アカウントサーバーへロー
 
 ## 開発と検証（Windows）
 
-Go 1.26.1、Node.js（Vite 8対応版）、Wails v3が必要です。
+Go 1.26.11、Node.js（Vite 8対応版）、Wails v3が必要です。
+
+`go.mod` の `go 1.26.1` は最低言語要件、`toolchain go1.26.11` は検証対象SDKです。配布用の `scripts/build-release.ps1` は、実際に選択されたSDKがこのtoolchain指定と一致することを生成処理前に確認します。公式SDKを専用ディレクトリへ展開して、そのプロセスだけでPATH/GOROOTを設定し、`GOTOOLCHAIN=local` と `go version` で確認できます。ホストのGoや永続PATHの変更は不要です。
+
+Windowsの検証用EXE/ZIP生成は次のコマンドを使用します。固定Wails Go/CLI alpha.74、JS runtime alpha.79と製品版1.1.2を維持します。生成成功は実機起動・正式配布の承認を意味しません。
+
+```powershell
+$env:npm_config_ignore_scripts = 'true'
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-release.ps1 -RunUiTests
+```
 
 ```powershell
 cd frontend

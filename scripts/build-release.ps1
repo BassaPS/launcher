@@ -3,6 +3,13 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 Push-Location $repoRoot
 try {
+    # The go directive is a minimum language requirement, not a release SDK pin.
+    $toolchainMatch = [regex]::Match((Get-Content 'go.mod' -Raw), '(?m)^toolchain (go\d+\.\d+\.\d+)\s*$')
+    if (-not $toolchainMatch.Success) { throw 'Pinned Go toolchain not found in go.mod' }
+    $actualGoVersion = go env GOVERSION
+    if ($LASTEXITCODE -ne 0 -or $actualGoVersion -cne $toolchainMatch.Groups[1].Value) {
+        throw "Release build requires $($toolchainMatch.Groups[1].Value); selected SDK is $actualGoVersion"
+    }
     $versionMatch = [regex]::Match((Get-Content 'pkg/constant/constant.go' -Raw), 'const CurrentLauncherVersion = "([^"]+)"')
     if (-not $versionMatch.Success) { throw 'Launcher version not found' }
     $version = $versionMatch.Groups[1].Value

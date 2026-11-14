@@ -2,12 +2,14 @@ module cyrene-launcher
 
 go 1.26.1
 
+toolchain go1.26.11
+
 require (
-	github.com/klauspost/compress v1.18.5
+	github.com/klauspost/compress v1.20.2
 	github.com/minio/selfupdate v0.6.0
 	github.com/wailsapp/wails/v3 v3.0.0-alpha.74
 	golang.org/x/exp v0.0.0-20260312153236-7ab1446f8b90
-	golang.org/x/sys v0.42.0
+	golang.org/x/sys v0.50.0
 	google.golang.org/protobuf v1.36.11
 )
 
@@ -49,8 +51,8 @@ require (
 	github.com/skeema/knownhosts v1.3.2 // indirect
 	github.com/wailsapp/go-webview2 v1.0.23 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
-	golang.org/x/crypto v0.49.0 // indirect
-	golang.org/x/net v0.52.0 // indirect
-	golang.org/x/text v0.35.0 // indirect
+	golang.org/x/crypto v0.59.0 // indirect
+	golang.org/x/net v0.62.0 // indirect
+	golang.org/x/text v0.44.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )
