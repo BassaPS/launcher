@@ -121,3 +121,12 @@ npx.cmd playwright test --config playwright.platform.config.ts
 ```
 
 Go側は隔離コピーのルートで `go test ./internal/platform-service -count=1`、全体回帰は既存の `go test ./...` と `scripts/build-release.ps1 -RunUiTests` を使用します。依存のセキュリティ対応はPhase 4B-4S、実Windows/WebView2確認は後続の承認対象です。
+
+
+## 依存セキュリティ（Phase 4B-4S）
+
+翻訳は同梱のja/en/zh/ko/vi JSONを静的登録し、HTTP backendを除去しました。保存言語は同じキー・schemaを維持し、対応言語と地域コードを正規化します。不正な言語値は既存の英語fallbackへ戻り、翻訳用URLやnamespaceの外部取得を生成しません。public/localesの既存ファイルも維持します。
+
+依存再現は隔離コピーで `npm.cmd ci --ignore-scripts --prefix frontend` を使います。`npm.cmd audit --prefix frontend --json` と `npm.cmd audit --prefix frontend --omit=dev --json` の両方を確認し、JSON取得失敗を0件扱いしないでください。既存Windows scriptを検証する場合も、プロセス環境の `npm_config_ignore_scripts=true` でinstall lifecycleを抑止した上で、既知のbuild/test scriptだけを明示実行します。
+
+このcheckpointではCritical/Highは0、production監査は0ですが、typescript-eslint経由のminimatch 10系（GHSA-g3hv-75wg-m249）が全依存監査にModerate 6影響packageとして残ります。最新版の親も10系を要求し、修正版11系にはAPI削除・matcher変更があるため、互換性のないmajor強制overrideや監査抑制は採用しません。親修正版または独立した互換性移行の判断が必要です。残存項目を受容した正式配布判定ではありません。実WebView2、未署名EXE、Go依存、既存NewsServiceのURL/本文サイズ等も後続確認として残します。
