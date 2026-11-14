@@ -2,10 +2,9 @@
 import { ExternalLink } from "lucide-react";
 import { AppService } from "@bindings/cyrene-launcher/internal/app-service";
 import { toast } from "react-toastify";
-import useLauncherStore from "@/stores/launcherStore";
+import PlatformRelease from "@/components/platformRelease";
 
 export default function AboutPage() {
-  const version = useLauncherStore((s) => s.launcherVersion);
   const openSource = async () => {
     try {
       await AppService.OpenURL("https://github.com/Mar7thDev/CyreneLauncher");
@@ -24,7 +23,6 @@ export default function AboutPage() {
       <section className="bassaps-panel">
         <div className="bassaps-panel-heading">
           <h2>BASSAPS Launcher</h2>
-          {version && <span className="bassaps-badge">v{version}</span>}
         </div>
         <p>
           Cyrene
@@ -53,6 +51,7 @@ export default function AboutPage() {
           元プロジェクトをGitHubで見る
         </button>
       </section>
+      <PlatformRelease />
       <section className="bassaps-panel">
         <div className="bassaps-panel-heading">
           <h2>MIT License</h2>

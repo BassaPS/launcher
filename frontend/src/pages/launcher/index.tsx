@@ -32,6 +32,7 @@ import {
 import UpdateModal from '@/components/updateModal';
 import { BackgroundSelector } from '@/components/backgroudModal';
 import NewsWidget from '@/components/newsWidget';
+import PlatformStatus from '@/components/platformStatus';
 import { useTranslation } from 'react-i18next';
 
 export default function LauncherPage() {
@@ -574,6 +575,8 @@ export default function LauncherPage() {
                 </aside>
             </BentoGrid>
             {isStarRail && <div className="bassaps-home-secondary"><NewsWidget /><section className="bassaps-tools-panel"><h2>関連ツール</h2>{widgetLinks.map(link => <button key={link.href} onClick={() => openExternal(link.href)}>{link.tooltip}<span aria-hidden="true">↗</span></button>)}</section></div>}
+
+            <PlatformStatus />
 
             <SplitShowcase compact className="bassaps-split-showcase" items={[
                 { id: 'guide', title: <h2 className="font-semibold">セットアップガイド</h2>, description: 'ゲームの選択、接続設定、困ったときの確認手順。', href: '/howto', target: '_self', onClick: event => { event.preventDefault(); void navigate({ to: '/howto' }); } },

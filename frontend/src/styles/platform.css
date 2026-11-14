@@ -1,0 +1,45 @@
+/* Status colors from common revision 2026-11-13.2A.1; desktop layout stays local. */
+.bassaps-platform-status,
+.bassaps-platform-release {
+  --platform-ok: #77cba5;
+  --platform-degraded: #edc67d;
+  --platform-outage: #f09999;
+  --platform-maintenance: #a8baf5;
+  align-self: start;
+}
+[data-theme="bassaps-light"] .bassaps-platform-status,
+[data-theme="bassaps-light"] .bassaps-platform-release {
+  --platform-ok: #237752;
+  --platform-degraded: #926511;
+  --platform-outage: #b63838;
+  --platform-maintenance: #425dac;
+}
+.bassaps-platform-status { padding: 12px; margin-block: 16px; }
+.bassaps-platform-status .bassaps-panel-heading { margin-bottom: 8px; flex-wrap: wrap; }
+.bassaps-platform-overall,
+.bassaps-platform-rows li > div { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.bassaps-platform-rows { margin: 6px 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px 18px; font-size: 11px; }
+.bassaps-platform-rows small { display: block; color: var(--text-secondary); font-size: 10px; line-height: 1.5; }
+.bassaps-platform-status [data-state="operational"] { color: var(--platform-ok); }
+.bassaps-platform-status [data-state="degraded"] { color: var(--platform-degraded); }
+.bassaps-platform-status [data-state="partial_outage"],
+.bassaps-platform-status [data-state="major_outage"] { color: var(--platform-outage); }
+.bassaps-platform-status [data-state="maintenance"] { color: var(--platform-maintenance); }
+.bassaps-platform-status [data-state="unknown"],
+.bassaps-platform-status [data-state="not_monitored"] { color: var(--text-secondary); }
+.bassaps-platform-links { display: flex; flex-wrap: wrap; gap: 4px 12px; min-width: 0; }
+.bassaps-sidebar .bassaps-platform-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 8px; }
+.bassaps-sidebar .bassaps-platform-link { font-size: 10px; }
+.bassaps-platform-link { font-size: 11px; text-align: start; color: var(--color-base-content); padding: 3px 0; border-radius: 4px; overflow-wrap: anywhere; }
+.bassaps-platform-link:hover { text-decoration: underline; }
+.bassaps-platform-link:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+.bassaps-platform-link:disabled { opacity: .45; cursor: default; }
+.bassaps-platform-status .bassaps-platform-note { font-size: 10px; line-height: 1.5; margin-top: 8px; }
+.bassaps-platform-digest { overflow-wrap: anywhere; }
+.bassaps-platform-release dd { overflow-wrap: anywhere; min-width: 0; }
+@media (max-width: 1050px) {
+  .bassaps-platform-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 500px) {
+  .bassaps-platform-rows { grid-template-columns: minmax(0, 1fr); }
+}

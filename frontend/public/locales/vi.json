@@ -416,5 +416,60 @@
         "cancel": "Hủy",
         "skip": "Tiếp tục mà không đăng nhập",
         "skip_reminder": "Bạn có thể đăng nhập bất cứ lúc nào ở góc trên bên phải"
+    },
+  "platform": {
+    "links": {
+      "portal": "Portal",
+      "news": "Thông báo",
+      "download": "Download Center",
+      "docs": "Documentation",
+      "status": "Status",
+      "account": "Account Portal",
+      "releases": "GitHub Releases"
+    },
+    "targets": {
+      "m7h-http": "M7H HTTP",
+      "m7h-game": "M7H Game UDP",
+      "account": "Account Portal",
+      "docs": "Documentation"
+    },
+    "services": "Dịch vụ BASSAPS",
+    "linkError": "Không thể mở liên kết.",
+    "statusTitle": "Trạng thái dịch vụ",
+    "refresh": "Tải lại",
+    "loading": "Đang kiểm tra…",
+    "statusError": "Không thể lấy Status API. Thông tin trước đó được hiển thị cùng thời điểm quan sát.",
+    "oldStatus": "Có dữ liệu quan sát đã cũ.",
+    "overall": "Trạng thái các dịch vụ được giám sát",
+    "observed": "Quan sát",
+    "noObservation": "Chưa có quan sát",
+    "oldObservation": "Quan sát cũ",
+    "insufficient": "Chưa đủ mẫu",
+    "declared": "Thông báo bảo trì hoặc sự cố",
+    "httpOnly": "Giám sát HTTP không đảm bảo đăng nhập hay kết nối trò chơi thành công. UDP được giám sát riêng.",
+    "releaseTitle": "Thông tin bản phát hành Launcher",
+    "installed": "Phiên bản đã cài",
+    "installedError": "Không xác nhận được bản đã cài",
+    "publicVersion": "Bản công khai mới nhất",
+    "noRelease": "Chưa có bản ổn định",
+    "unconfirmed": "Chưa xác nhận",
+    "releaseError": "Không thể xác nhận bản công khai mới nhất. Kết quả được giữ lại là thông tin trước đó.",
+    "expired": "Thông tin phát hành đã hết hạn và không được hiển thị như bản mới nhất đã xác nhận.",
+    "oldRelease": "Thông tin bộ nhớ đệm cũ",
+    "checked": "Thời điểm nhà cung cấp kiểm tra",
+    "tag": "Thẻ",
+    "noAsset": "Không có tệp phân phối phù hợp",
+    "noAssetInfo": "Chưa cung cấp thông tin tệp (API cũ)",
+    "digest": "Thông tin SHA-256 được cung cấp (chưa kiểm tra tệp)",
+    "displayOnly": "Chỉ hiển thị thông tin phiên bản. Chuỗi khác nhau không xác định bản nào mới hơn. Tự động cập nhật vẫn bị tắt.",
+    "states": {
+      "operational": "Bình thường",
+      "degraded": "Giảm hiệu năng",
+      "partial_outage": "Sự cố một phần",
+      "major_outage": "Sự cố nghiêm trọng",
+      "maintenance": "Bảo trì",
+      "unknown": "Chưa rõ",
+      "not_monitored": "Chưa giám sát"
     }
+  }
 }

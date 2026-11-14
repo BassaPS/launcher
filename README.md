@@ -102,9 +102,13 @@ SRToolsの502対策: 「ローカル中継を開始」→「March7thHoney」→ 
 
 ## 公開Status・Release情報サービス
 
+ホームには既存のゲーム起動・ニュース・ツールの後に小型の稼働状況カードを表示します。M7H HTTPとUDP、Account、Documentationを分け、未監視・不明・古い観測・観測不足・取得失敗を表示します。Statusの取得成否でゲーム起動条件を変更しません。
+
+Aboutではインストール版と公開版を独立表示し、提供側の確認時刻と古い情報・期限切れを区別します。旧APIのファイル情報未提供と、新APIの対応ファイルなしを区別し、推奨ファイルは提供側の選択だけを表示します。自動更新には接続しません。サイドバー/モバイルメニューの小さなリンクから共通6サービスを外部ブラウザーで開けます。固定URLのローカル定義は共通revision `2026-11-13.2A.1` に対応します。
+
 PlatformServiceは固定のStatus APIとDownload latest APIを匿名GETで取得し、表示用DTOを返します。Goの呼出しcontext、10秒timeout、1MiB本文上限、redirect拒否、JSON・日時・URL検証を適用します。endpointごとの進行中HTTPを共有し、最後の呼出しのキャンセルとServiceShutdownで通信を終了します。OS環境proxyはHTTP_PROXY/HTTPS_PROXY/NO_PROXYに従います。
 
-usePlatformInfoはconsumer間で取得を共有し、Statusの60秒再確認、visibilitychange、観測・Releaseの期限再評価を管理します。ReleaseのassetStateはnot_provided / none / availableを区別します。インストール版は既存GetCurrentLauncherVersionから取得します。ホーム・Aboutへの配置はPhase 4B-3で扱います。
+usePlatformInfoはconsumer間で取得を共有し、Statusの60秒再確認、visibilitychange、観測・Releaseの期限再評価を管理します。HomeはusePlatformStatus、AboutはusePlatformReleaseを購読し、不要な別APIを取得しません。ReleaseのassetStateはnot_provided / none / availableを区別します。インストール版は既存GetCurrentLauncherVersionから取得します。
 
 以下の追加試験は、非秘密ソースだけをコピーした隔離環境のfrontendディレクトリで実行します。通常のproduction buildは標準index.htmlをentryにします。
 

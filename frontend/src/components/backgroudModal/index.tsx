@@ -113,7 +113,7 @@ export const BackgroundSelector = () => {
         ] as const).map((game) => {
           const isActive = gameProfile === game.id
           return (
-            <div key={game.id} className="tooltip tooltip-right" data-tip={game.label}>
+            <div key={game.id} className="tooltip tooltip-left" data-tip={game.label}>
               <motion.button
                 type="button"
                 transition={{ type: "spring", stiffness: 420, damping: 24 }}
@@ -137,7 +137,7 @@ export const BackgroundSelector = () => {
         })}
       </div>
 
-      <div className="tooltip tooltip-right" data-tip={t("background.select_bg")}>
+      <div className="tooltip tooltip-left" data-tip={t("background.select_bg")}>
         <button
           aria-label={t("background.select_bg")}
           className="btn btn-ghost btn-circle border border-base-300"

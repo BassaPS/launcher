@@ -418,5 +418,60 @@
         "cancel": "Cancel",
         "skip": "Continue without signing in",
         "skip_reminder": "Sign in anytime from the top-right"
+    },
+  "platform": {
+    "links": {
+      "portal": "Portal",
+      "news": "News",
+      "download": "Download Center",
+      "docs": "Documentation",
+      "status": "Status",
+      "account": "Account Portal",
+      "releases": "GitHub Releases"
+    },
+    "targets": {
+      "m7h-http": "M7H HTTP",
+      "m7h-game": "M7H Game UDP",
+      "account": "Account Portal",
+      "docs": "Documentation"
+    },
+    "services": "BASSAPS services",
+    "linkError": "Could not open the link.",
+    "statusTitle": "Service status",
+    "refresh": "Refresh",
+    "loading": "Checking…",
+    "statusError": "Status API unavailable. Any previous information is shown with its observation time.",
+    "oldStatus": "Some status observations are old.",
+    "overall": "Monitored services",
+    "observed": "Observed",
+    "noObservation": "No observation",
+    "oldObservation": "Old observation",
+    "insufficient": "Insufficient samples",
+    "declared": "Maintenance / incident declaration",
+    "httpOnly": "HTTP checks do not verify sign-in or game connectivity. UDP monitoring is separate.",
+    "releaseTitle": "Launcher releases",
+    "installed": "Installed version",
+    "installedError": "Installed version unavailable",
+    "publicVersion": "Public latest version",
+    "noRelease": "No stable release",
+    "unconfirmed": "Not confirmed",
+    "releaseError": "Could not confirm the public latest release. Any retained result is previous information.",
+    "expired": "Release information expired; it is not shown as confirmed latest.",
+    "oldRelease": "Old cached information",
+    "checked": "Provider checked at",
+    "tag": "Tag",
+    "noAsset": "No matching distribution file",
+    "noAssetInfo": "File information not provided (legacy API)",
+    "digest": "Provided SHA-256 metadata (file not verified)",
+    "displayOnly": "Version information only. Different version strings do not establish which is newer. Automatic updates remain disabled.",
+    "states": {
+      "operational": "Operational",
+      "degraded": "Degraded",
+      "partial_outage": "Partial outage",
+      "major_outage": "Major outage",
+      "maintenance": "Maintenance",
+      "unknown": "Unknown",
+      "not_monitored": "Not monitored"
     }
+  }
 }

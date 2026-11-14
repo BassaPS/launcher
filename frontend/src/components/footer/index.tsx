@@ -5,6 +5,7 @@ import { X, ExternalLink } from "lucide-react";
 import licenseText from "../../../../LICENSE?raw";
 import { AppService } from "@bindings/cyrene-launcher/internal/app-service";
 import { toast } from "react-toastify";
+import PlatformLinks from "@/components/platformLinks";
 
 export default function Credits() {
   const titleId = useId();
@@ -18,6 +19,7 @@ export default function Credits() {
   };
   return (
     <>
+      <PlatformLinks />
       <button
         className="bassaps-credits"
         onClick={() => dialog.current?.showModal()}

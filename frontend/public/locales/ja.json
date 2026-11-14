@@ -416,5 +416,60 @@
         "cancel": "キャンセル",
         "skip": "ログインせずに続ける",
         "skip_reminder": "右上からいつでもログインできます"
+    },
+  "platform": {
+    "links": {
+      "portal": "Portal",
+      "news": "お知らせ",
+      "download": "Download Center",
+      "docs": "Documentation",
+      "status": "Status",
+      "account": "Account Portal",
+      "releases": "GitHub Releases"
+    },
+    "targets": {
+      "m7h-http": "M7H HTTP",
+      "m7h-game": "M7H Game UDP",
+      "account": "Account Portal",
+      "docs": "Documentation"
+    },
+    "services": "BASSAPSサービス",
+    "linkError": "リンクを開けませんでした。",
+    "statusTitle": "サービス稼働状況",
+    "refresh": "再取得",
+    "loading": "確認中…",
+    "statusError": "Status APIを取得できません。前回情報がある場合は観測時刻とともに表示します。",
+    "oldStatus": "古い観測情報が含まれています。",
+    "overall": "監視対象の全体状態",
+    "observed": "観測",
+    "noObservation": "観測なし",
+    "oldObservation": "古い観測",
+    "insufficient": "観測数不足",
+    "declared": "メンテナンス・障害の宣言",
+    "httpOnly": "HTTP監視は認証・ゲーム接続の成功を保証しません。UDP監視は別です。",
+    "releaseTitle": "Launcherリリース情報",
+    "installed": "インストール済み版",
+    "installedError": "インストール版を確認できません",
+    "publicVersion": "公開最新版",
+    "noRelease": "正式リリースなし",
+    "unconfirmed": "未確認",
+    "releaseError": "公開最新版を確認できません。保持している場合は前回情報です。",
+    "expired": "リリース情報は期限切れです。最新確認済みとして表示しません。",
+    "oldRelease": "古いキャッシュ情報",
+    "checked": "提供側の確認時刻",
+    "tag": "タグ",
+    "noAsset": "対応配布ファイルなし",
+    "noAssetInfo": "ファイル情報未提供（旧API）",
+    "digest": "提供されたSHA-256情報（実ファイル未検証）",
+    "displayOnly": "版情報の表示専用です。文字列の相違だけで新旧を判定しません。自動更新は無効です。",
+    "states": {
+      "operational": "正常",
+      "degraded": "性能低下",
+      "partial_outage": "部分障害",
+      "major_outage": "重大障害",
+      "maintenance": "メンテナンス",
+      "unknown": "状態不明",
+      "not_monitored": "未監視"
     }
+  }
 }

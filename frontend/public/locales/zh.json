@@ -418,5 +418,60 @@
         "cancel": "取消",
         "skip": "暂不登录，直接进入",
         "skip_reminder": "随时可在右上角登录"
+    },
+  "platform": {
+    "links": {
+      "portal": "Portal",
+      "news": "公告",
+      "download": "Download Center",
+      "docs": "Documentation",
+      "status": "Status",
+      "account": "Account Portal",
+      "releases": "GitHub Releases"
+    },
+    "targets": {
+      "m7h-http": "M7H HTTP",
+      "m7h-game": "M7H Game UDP",
+      "account": "Account Portal",
+      "docs": "Documentation"
+    },
+    "services": "BASSAPS 服务",
+    "linkError": "无法打开链接。",
+    "statusTitle": "服务运行状态",
+    "refresh": "重新获取",
+    "loading": "正在确认…",
+    "statusError": "无法获取 Status API。已有信息会附带观测时间显示。",
+    "oldStatus": "部分观测信息已过期。",
+    "overall": "监控服务总体状态",
+    "observed": "观测时间",
+    "noObservation": "尚无观测",
+    "oldObservation": "旧观测",
+    "insufficient": "观测样本不足",
+    "declared": "维护或故障声明",
+    "httpOnly": "HTTP 监控不保证认证或游戏连接成功。UDP 监控独立进行。",
+    "releaseTitle": "启动器发布信息",
+    "installed": "已安装版本",
+    "installedError": "无法确认已安装版本",
+    "publicVersion": "公开最新版本",
+    "noRelease": "暂无正式版本",
+    "unconfirmed": "未确认",
+    "releaseError": "无法确认公开最新版本。保留的结果属于先前信息。",
+    "expired": "发布信息已过期，不作为已确认的最新版本显示。",
+    "oldRelease": "旧缓存信息",
+    "checked": "提供方确认时间",
+    "tag": "标签",
+    "noAsset": "无匹配的分发文件",
+    "noAssetInfo": "未提供文件信息（旧 API）",
+    "digest": "提供的 SHA-256 信息（未验证文件）",
+    "displayOnly": "仅显示版本信息。版本字符串不同不代表先后顺序。自动更新保持禁用。",
+    "states": {
+      "operational": "正常",
+      "degraded": "性能下降",
+      "partial_outage": "部分故障",
+      "major_outage": "严重故障",
+      "maintenance": "维护中",
+      "unknown": "状态未知",
+      "not_monitored": "未监控"
     }
+  }
 }
