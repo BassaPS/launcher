@@ -4,7 +4,8 @@ import { ChevronRight, Megaphone, Pin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
 import { NewsService } from "@bindings/cyrene-launcher/internal/news-service";
-import { AppService } from "@bindings/cyrene-launcher/internal/app-service";
+import { canOpenNews, openNews } from "@/utils/newsLinks";
+import { toast } from "react-toastify";
 
 interface WidgetItem {
     id: string
@@ -31,10 +32,8 @@ export default function NewsWidget() {
 
     if (items.length === 0) return null
 
-    const openLink = async (url: string) => {
-        if (!url) return
-        try { await AppService.OpenURL(url) }
-        catch { window.open(url, "_blank") }
+    const openLink = async (item: WidgetItem) => {
+        if (!await openNews("register",item.id,item.url)) toast.error(t("platform.linkError"))
     }
 
     return (
@@ -54,7 +53,8 @@ export default function NewsWidget() {
                 {items.map(item => (
                     <li key={item.id}>
                         <button
-                            onClick={() => openLink(item.url)}
+                            onClick={() => openLink(item)}
+                            disabled={!canOpenNews("register",item.id,item.url)}
                             className="w-full flex items-center gap-2 px-1 py-1 rounded-lg hover:bg-base-300 text-left transition-colors"
                         >
                             {item.pinned && <Pin size={12} className="text-base-content/80 shrink-0" />}

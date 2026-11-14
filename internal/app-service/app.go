@@ -1,13 +1,14 @@
 package appService
 
 import (
+	"cyrene-launcher/internal/linkpolicy"
 	"cyrene-launcher/pkg/constant"
 	"time"
 
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
-type AppService struct{}
+type AppService struct{ opener func(string) error }
 
 func (a *AppService) GetCurrentLauncherVersion() (bool, string) {
 	return true, constant.CurrentLauncherVersion
@@ -63,9 +64,16 @@ func (a *AppService) RestoreApp() (bool, string) {
 }
 
 func (a *AppService) OpenURL(url string) (bool, string) {
-	if url == "" {
-		return false, "empty url"
+	validated, err := linkpolicy.WebURL(url)
+	if err != nil {
+		return false, "invalid_external_link"
 	}
-	application.Get().Browser.OpenURL(url)
+	open := a.opener
+	if open == nil {
+		open = application.Get().Browser.OpenURL
+	}
+	if err := open(validated); err != nil {
+		return false, "external_link_open_failed"
+	}
 	return true, ""
 }

@@ -9,8 +9,8 @@ const installedID = 2767927275;
 const locale = (lang: string) => JSON.parse(readFileSync(new URL(`../public/locales/${lang}.json`, import.meta.url), 'utf8')).platform;
 const ja = locale('ja');
 const image = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+j1ioAAAAASUVORK5CYII=';
-const announcement = { id: 'fixture-pinned', title: '固定の運営告知', intro: '公開告知の本文', image,
-  url: 'https://register.bassaps.com/announcements#fixture-pinned', time: '2026-11-14', timestamp: 1794614400, type: 'notice', pinned: true };
+const announcement = { id: 'f48c7f6b-3a9b-4fba-a7e9-66077aa5c4d8', title: '固定の運営告知', intro: '公開告知の本文', image: 'https://register.bassaps.com/api/files/f48c7f6b-3a9b-4fba-a7e9-66077aa5c4d8',
+  url: 'https://register.bassaps.com/announcements#f48c7f6b-3a9b-4fba-a7e9-66077aa5c4d8', time: '2026-11-14', timestamp: 1794614400, type: 'notice', pinned: true };
 
 function statusFixture() {
   return { overallStatus: 'operational', generatedAt: now, updatedAt: now,
@@ -54,6 +54,7 @@ async function setup(page: Page, options: {
     }
     if (id === releaseID) return control.releaseFails ? route.fulfill({ status: 503, body: 'mock failure' }) : route.fulfill({ json: options.release ?? releaseFixture() });
     if (id === installedID && options.installedFails) return route.fulfill({ json: [false, ''] });
+    if (id === 2914043854) return route.fulfill({ json: [true, image, ''] });
     if (id === 1132232877) { opened.push(body.args.args[0]); return route.fulfill({ json: [true, ''] }); }
     return route.fallback();
   });
@@ -234,8 +235,8 @@ test('existing NewsWidget, official/server tabs, image, ordering, read state and
   await page.route('**/wails/runtime**', route => {
     const body = route.request().postDataJSON();
     if (body.object !== 0) return route.fallback();
-    if (body.args.methodID === 1638005996) return route.fulfill({ json: [true, [{ ...announcement, id: 'official', title: '公式ニュース', pinned: false }], ''] });
-    if (body.args.methodID === 3670222014) return route.fulfill({ json: offline ? [false, [], 'fixture offline'] : [true, [announcement, { ...announcement, id: 'ordinary', title: '通常のお知らせ', pinned: false }], ''] });
+    if (body.args.methodID === 1638005996) return route.fulfill({ json: [true, [{ ...announcement, id: 'official', title: '公式ニュース', url: 'https://hoyo.link/461DNURXG', image: 'https://fastcdn.hoyoverse.com/static-resource-v2/2026/11/12/cover.png', pinned: false }], ''] });
+    if (body.args.methodID === 3670222014) return route.fulfill({ json: offline ? [false, [], 'fixture offline'] : [true, [announcement, { ...announcement, id: 'a48c7f6b-3a9b-4fba-a7e9-66077aa5c4d8', url: 'https://register.bassaps.com/announcements#a48c7f6b-3a9b-4fba-a7e9-66077aa5c4d8', title: '通常のお知らせ', pinned: false }], ''] });
     return route.fallback();
   });
   await page.goto('/'); await expect(page.getByRole('button', { name: /固定の運営告知/ })).toBeVisible();

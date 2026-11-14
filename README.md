@@ -69,6 +69,14 @@ wails3 build
 
 ランチャーの自己更新は、BASSAPS専用の配布先が未設定のため無効です。上流Cyreneの実行ファイルで上書きされることを防ぐため、確認処理・更新実行処理の両方で停止しています。有効にする場合は `pkg/constant/constant.go` の `LauncherGitUrl` をBASSAPS専用のリリースURLに設定し、配布するファイル名を `LauncherFile` に合わせてください。ゲーム・ローカルサーバーの更新処理は引き続き利用できます。
 
+## ニュースと外部リンクの安全性
+
+ニュースは固定endpointから匿名取得し、redirectを拒否します。JSON本文はRegister 1MiB・公式512KiB、件数はRegister 30件・公式post 90件/banner 30件までとし、型・文字数・ID・日時とsource別URLを検証します。公開/非公開の最終判定は提供側の責務です。
+
+記事を開く際は `NewsService.OpenNewsURL` がGo側で再検証します。汎用 `AppService.OpenURL` は既存の固定Webリンクだけを許可し、Wailsの直接Browser runtime呼出しをmiddlewareで遮断します。ローカルフォルダ操作とdevice認証はそれぞれ既存の専用経路を使います。
+
+ニュース画像は検証済み記事IDからGo側で取得し、redirect拒否・3MiB上限・PNG/JPEG・寸法制限を確認してinline rasterとして渡します。キャッシュは8件・5分、同時取得は2件、待機を含め12秒までです。未対応画像はplaceholderになります。WebViewは元の画像URLへ接続しません。許可host/pathの追加時は実仕様を確認し、Go/TypeScriptの規則と回帰試験を更新してください。
+
 ## Credits / License
 
 Cyrene Launcher / Mar7thDev、原作者 AzenKain、および既存の貢献者に感謝します。

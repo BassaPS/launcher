@@ -2,6 +2,7 @@ package fsService
 
 import (
 	"cyrene-launcher/pkg/sevenzip"
+	"net/url"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -12,7 +13,7 @@ import (
 	"golang.org/x/sys/windows"
 )
 
-type FSService struct{}
+type FSService struct{ folderOpener func(string) error }
 
 func (f *FSService) PickFolder() (string, error) {
 	dialog := application.Get().Dialog.OpenFile().
@@ -127,8 +128,14 @@ func (f *FSService) OpenFolder(path string) (bool, string) {
 		return false, "directory not found: " + absPath
 	}
 
-	url := "file:///" + filepath.ToSlash(absPath)
-	application.Get().Browser.OpenURL(url)
+	folderURL := (&url.URL{Scheme: "file", Path: "/" + filepath.ToSlash(absPath)}).String()
+	open := f.folderOpener
+	if open == nil {
+		open = application.Get().Browser.OpenURL
+	}
+	if err := open(folderURL); err != nil {
+		return false, "folder_open_failed"
+	}
 
 	return true, ""
 }

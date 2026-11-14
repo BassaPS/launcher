@@ -4,7 +4,7 @@ import { Newspaper, Server, RefreshCw, ExternalLink, Megaphone, Calendar, AlertC
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import { NewsService } from "@bindings/cyrene-launcher/internal/news-service"
-import { AppService } from "@bindings/cyrene-launcher/internal/app-service"
+import { canOpenNews, canLoadNewsImage, isNewsRaster, openNews, type NewsSource } from "@/utils/newsLinks"
 import useNewsStore from "@/stores/newsStore"
 
 interface NewsItem {
@@ -135,10 +135,9 @@ export default function NewsPage() {
         }
     }, [revision, activeTab, officialKey])
 
-    const openLink = async (url: string) => {
-        if (!url) return
-        try { await AppService.OpenURL(url) }
-        catch { window.open(url, "_blank") }
+    const source: NewsSource = activeTab === "server" ? "register" : "official"
+    const openLink = async (item: NewsItem) => {
+        if (!await openNews(source,item.id,item.url)) toast.error(t("platform.linkError"))
     }
 
     const renderEmptyState = () => {
@@ -260,7 +259,8 @@ export default function NewsPage() {
                                     key={item.id || idx}
                                     item={item}
                                     delay={idx * 0.04}
-                                    onOpen={() => openLink(item.url)}
+                                    source={source}
+                                    onOpen={() => openLink(item)}
                                 />
                             ))}
                         </motion.div>
@@ -271,23 +271,46 @@ export default function NewsPage() {
     )
 }
 
-function NewsCard({ item, delay, onOpen }: { item: NewsItem, delay: number, onOpen: () => void }) {
+function NewsCard({ item, source, delay, onOpen }: { item: NewsItem, source: NewsSource, delay: number, onOpen: () => void }) {
+	const cardRef = useRef<HTMLDivElement>(null)
+	const [visible, setVisible] = useState(false)
+	useEffect(() => {
+		const node = cardRef.current
+		if (!node) return
+		const observer = new IntersectionObserver(entries => setVisible(entries.some(entry => entry.isIntersecting)), { rootMargin: '120px' })
+		observer.observe(node)
+		return () => observer.disconnect()
+	}, [])
     const [imgError, setImgError] = useState(false)
-    const hasImage = item.image && !imgError
+    const [raster, setRaster] = useState("")
+    useEffect(() => {
+        let cancelled = false
+        setRaster(""); setImgError(false)
+        if (visible && canLoadNewsImage(source,item.id,item.image)) {
+            const request = NewsService.GetNewsImage(source,item.id)
+            void request.then(([ok,data]) => { if (!cancelled && ok && isNewsRaster(data)) setRaster(data) }).catch(() => {})
+            return () => { cancelled = true; request.cancel() }
+        }
+        return () => { cancelled = true }
+    }, [visible,source,item.id,item.image])
+    const hasImage = raster && !imgError
+    const clickable = canOpenNews(source,item.id,item.url)
 
     return (
         <motion.div
+            ref={cardRef}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.25 }}
             whileHover={{ y: -3 }}
             className="group bg-base-100 backdrop-blur-md border border-base-300 rounded-lg overflow-hidden hover:border-base-300 hover:shadow-sm  transition-all cursor-pointer"
-            onClick={onOpen}
+            onClick={clickable ? onOpen : undefined}
+            aria-disabled={!clickable}
         >
             <div className="h-36 overflow-hidden relative">
                 {hasImage ? (
                     <img
-                        src={item.image}
+                        src={raster}
                         alt={item.title}
                         loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

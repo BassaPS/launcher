@@ -22,6 +22,15 @@ export function GetCustomNews(): $CancellablePromise<[boolean, $models.NewsItem[
 }
 
 /**
+ * GetNewsImage accepts only the ID of an image from a validated news response.
+ * No arbitrary URL, file, authenticated proxy or infrastructure is exposed.
+ * Only bounded raster bytes reach the WebView; it never fetches the source URL.
+ */
+export function GetNewsImage(source: string, id: string): $CancellablePromise<[boolean, string, string]> {
+    return $Call.ByID(2914043854, source, id);
+}
+
+/**
  * GetOfficialNews fetches the HoYoPlay content for HSR (banners + 3-type posts)
  * in a single HTTP request. Frontend filters posts by type for each tab.
  */
@@ -30,6 +39,10 @@ export function GetOfficialNews(lang: string): $CancellablePromise<[boolean, $mo
         $result[1] = $$createType1($result[1]);
         return $result;
     });
+}
+
+export function OpenNewsURL(source: string, id: string, raw: string): $CancellablePromise<[boolean, string]> {
+    return $Call.ByID(1482086086, source, id, raw);
 }
 
 // Private type creation functions

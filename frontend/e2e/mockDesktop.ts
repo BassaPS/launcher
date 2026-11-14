@@ -46,6 +46,8 @@ export async function mockDesktop(page: Page, signedIn = true, serverNews: unkno
         160707185: true,
         3297030196: true,
         3670222014: [true, serverNews, ""],
+        1482086086: [true, ""],
+        2914043854: [false, "", "fixture image unavailable"],
         1638005996: [true, [], ""],
         3317106280: "https://register.bassaps.com",
         652787832: { overallStatus: "unknown", updatedAt: null, generatedAt: new Date().toISOString(), services: [] },

@@ -12,6 +12,7 @@ import (
 	gitService "cyrene-launcher/internal/git-service"
 	handbookService "cyrene-launcher/internal/handbook-service"
 	languageService "cyrene-launcher/internal/language-service"
+	"cyrene-launcher/internal/linkpolicy"
 	march7thHoneyService "cyrene-launcher/internal/march7thhoney-service"
 	newsService "cyrene-launcher/internal/news-service"
 	platformService "cyrene-launcher/internal/platform-service"
@@ -120,7 +121,8 @@ func main() {
 			application.NewService(platformService.New()),
 		},
 		Assets: application.AssetOptions{
-			Handler: application.AssetFileServerFS(assets),
+			Handler:    application.AssetFileServerFS(assets),
+			Middleware: linkpolicy.RuntimeGuard,
 		},
 		Mac: application.MacOptions{
 			ApplicationShouldTerminateAfterLastWindowClosed: true,

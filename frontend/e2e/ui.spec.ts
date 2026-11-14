@@ -2,9 +2,9 @@ import { test, expect } from "@playwright/test";
 import { mockDesktop } from "./mockDesktop";
 
 test("server news shows published portal content and opens the portal article", async ({ page }) => {
-  const article = "https://register.bassaps.com/announcements#portal-test";
+  const article = "https://register.bassaps.com/announcements#f48c7f6b-3a9b-4fba-a7e9-66077aa5c4d8";
   await mockDesktop(page, true, [{
-    id: "portal-test", title: "ポータル配信テスト", intro: "サーバーの公開お知らせ本文",
+    id: "f48c7f6b-3a9b-4fba-a7e9-66077aa5c4d8", title: "ポータル配信テスト", intro: "サーバーの公開お知らせ本文",
     image: "", url: article, time: "2026-11-12", timestamp: 1794409200, type: "notice", pinned: true,
   }]);
   let opened: unknown = null;
@@ -13,8 +13,8 @@ test("server news shows published portal content and opens the portal article", 
     const body = route.request().method() === "POST" ? route.request().postDataJSON() : {
       args: JSON.parse(url.searchParams.get("args") || "{}"),
     };
-    if (body.args.methodID !== 1132232877) return route.fallback();
-    opened = body.args.args[0];
+    if (body.args.methodID !== 1482086086) return route.fallback();
+    opened = body.args.args[2];
     return route.fulfill({ json: [true, ""] });
   });
   await page.goto("/news");

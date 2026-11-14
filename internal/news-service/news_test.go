@@ -1,47 +1,31 @@
 package newsService
 
 import (
-	"cyrene-launcher/pkg/constant"
-	"io"
-	"net/http"
-	"strings"
+	"context"
+	"encoding/json"
 	"testing"
 )
 
-type testTransport func(*http.Request) (*http.Response, error)
-
-func (f testTransport) RoundTrip(r *http.Request) (*http.Response, error) { return f(r) }
-
 func TestCustomNewsUsesPortalAndOrdersPinnedPosts(t *testing.T) {
-	previous := http.DefaultTransport
-	t.Cleanup(func() { http.DefaultTransport = previous })
-	http.DefaultTransport = testTransport(func(r *http.Request) (*http.Response, error) {
-		if r.URL.String() != "https://register.bassaps.com/api/launcher/news" || constant.AnnouncementUrl != r.URL.String() {
-			t.Fatalf("unexpected server news source: %s", r.URL)
-		}
-		return &http.Response{StatusCode: 200, Body: io.NopCloser(strings.NewReader(`[
-			{"id":"new","title":"Update","intro":"Read more","timestamp":200,"url":"https://register.bassaps.com/announcements#new"},
-			{"id":"pin","title":"Pinned notice","intro":"Server maintenance","timestamp":100,"pinned":true,"url":"https://register.bassaps.com/announcements#pin"}
-		]`))}, nil
-	})
-	ok, items, err := (&NewsService{}).GetCustomNews()
-	if !ok || err != "" || len(items) != 2 {
-		t.Fatalf("news read failed: %v %v %s", ok, items, err)
-	}
-	if items[0].ID != "pin" || items[1].ID != "new" || items[0].Intro != "Server maintenance" {
-		t.Fatalf("unexpected server news ordering/content: %+v", items)
+	first := validRegister()
+	first.Title = "Update"
+	first.Timestamp = 1794418926
+	pinned := validRegister()
+	pinned.ID = "a48c7f6b-3a9b-4fba-a7e9-66077aa5c4d8"
+	pinned.URL = "https://register.bassaps.com/announcements#" + pinned.ID
+	pinned.Pinned = true
+	pinned.Intro = "Server maintenance"
+	body, _ := json.Marshal([]NewsItem{first, pinned})
+	n := fixtureNews(string(body))
+	ok, items, msg := n.GetCustomNews(context.Background())
+	if !ok || msg != "" || len(items) != 2 || items[0].ID != pinned.ID || items[0].Intro != "Server maintenance" || items[1].ID != first.ID {
+		t.Fatalf("normal news ordering/content failed: %v %v %s", ok, items, msg)
 	}
 }
-
 func TestCustomNewsRejectsInvalidResponse(t *testing.T) {
-	previous := http.DefaultTransport
-	t.Cleanup(func() { http.DefaultTransport = previous })
-	for _, body := range []string{`<html>error</html>`, `{"items":[]}`} {
-		http.DefaultTransport = testTransport(func(r *http.Request) (*http.Response, error) {
-			return &http.Response{StatusCode: 200, Body: io.NopCloser(strings.NewReader(body))}, nil
-		})
-		if ok, _, _ := (&NewsService{}).GetCustomNews(); ok {
-			t.Fatalf("accepted invalid news response: %s", body)
+	for _, body := range []string{"<html>error</html>", "{\"items\":[]}"} {
+		if ok, _, _ := fixtureNews(body).GetCustomNews(context.Background()); ok {
+			t.Fatal("accepted invalid response")
 		}
 	}
 }

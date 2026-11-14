@@ -1,21 +1,19 @@
 package newsService
 
 import (
+	"context"
+	"cyrene-launcher/internal/linkpolicy"
 	"cyrene-launcher/pkg/constant"
 	"encoding/json"
-	"fmt"
 	"html"
-	"io"
-	"net/http"
 	"net/url"
 	"regexp"
 	"sort"
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 )
-
-type NewsService struct{}
 
 // NewsItem is the unified shape returned for all news sources.
 type NewsItem struct {
@@ -51,41 +49,21 @@ func stripHTML(s string) string {
 	return strings.TrimSpace(s)
 }
 
-func httpGet(reqURL string, headers map[string]string) ([]byte, error) {
-	client := &http.Client{Timeout: 12 * time.Second}
-	req, err := http.NewRequest("GET", reqURL, nil)
-	if err != nil {
-		return nil, err
-	}
-	for k, v := range headers {
-		req.Header.Set(k, v)
-	}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("HTTP %d", resp.StatusCode)
-	}
-	return io.ReadAll(resp.Body)
-}
-
 // ───────── HoYoPlay (HYP) Game Content API ─────────
 
 type hypContentResp struct {
-	Retcode int    `json:"retcode"`
+	Retcode *int   `json:"retcode"`
 	Message string `json:"message"`
-	Data    struct {
-		Content struct {
-			Banners []struct {
+	Data    *struct {
+		Content *struct {
+			Banners *[]struct {
 				ID    string `json:"id"`
 				Image struct {
 					URL  string `json:"url"`
 					Link string `json:"link"`
 				} `json:"image"`
 			} `json:"banners"`
-			Posts []struct {
+			Posts *[]struct {
 				ID    string `json:"id"`
 				Type  string `json:"type"`
 				Title string `json:"title"`
@@ -108,7 +86,7 @@ var postTypeMap = map[string]string{
 // date is more than a month in the future, treat it as last year (e.g. "12/30"
 // returned in January).
 func parseMonthDay(s string) (int64, string) {
-	if s == "" {
+	if len(s) != 5 || s[2] != '/' || s[0] < '0' || s[0] > '9' || s[1] < '0' || s[1] > '9' || s[3] < '0' || s[3] > '9' || s[4] < '0' || s[4] > '9' {
 		return 0, ""
 	}
 	parts := strings.Split(s, "/")
@@ -123,6 +101,9 @@ func parseMonthDay(s string) (int64, string) {
 	now := time.Now()
 	year := now.Year()
 	candidate := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
+	if candidate.Month() != time.Month(month) || candidate.Day() != day {
+		return 0, ""
+	}
 	if candidate.Sub(now) > 31*24*time.Hour {
 		candidate = candidate.AddDate(-1, 0, 0)
 	}
@@ -131,49 +112,65 @@ func parseMonthDay(s string) (int64, string) {
 
 // GetOfficialNews fetches the HoYoPlay content for HSR (banners + 3-type posts)
 // in a single HTTP request. Frontend filters posts by type for each tab.
-func (n *NewsService) GetOfficialNews(lang string) (bool, []NewsItem, string) {
+func (n *NewsService) GetOfficialNews(ctx context.Context, lang string) (bool, []NewsItem, string) {
 	if lang == "" {
 		lang = "en-us"
 	}
 
+	allowedLanguage := map[string]bool{"en-us": true, "zh-cn": true, "zh-tw": true, "ja-jp": true, "ko-kr": true, "ru-ru": true, "vi-vn": true, "th-th": true, "id-id": true, "de-de": true, "fr-fr": true, "pt-pt": true, "es-es": true}
+	if !allowedLanguage[lang] {
+		return false, nil, "news_invalid_language"
+	}
 	q := url.Values{}
 	q.Set("launcher_id", constant.HSRLauncherID)
 	q.Set("game_id", constant.HSRGameID)
 	q.Set("language", lang)
 	apiURL := constant.HSRLauncherContentURL + "?" + q.Encode()
 
-	body, err := httpGet(apiURL, nil)
+	body, _, err := n.read(ctx, apiURL, officialLimit, false)
 	if err != nil {
 		return false, nil, err.Error()
 	}
 
 	var result hypContentResp
-	if err := json.Unmarshal(body, &result); err != nil {
-		return false, nil, "parse error: " + err.Error()
+	if err := json.Unmarshal(body, &result); err != nil || !utf8.Valid(body) {
+		return false, nil, "news_invalid_json"
 	}
-	if result.Retcode != 0 {
-		return false, nil, fmt.Sprintf("API error %d: %s", result.Retcode, result.Message)
+	if result.Retcode == nil || *result.Retcode != 0 || result.Data == nil || result.Data.Content == nil || result.Data.Content.Posts == nil || result.Data.Content.Banners == nil || len(*result.Data.Content.Posts) > 90 || len(*result.Data.Content.Banners) > 30 {
+		return false, nil, "news_invalid_envelope"
 	}
 
 	// Use first banner image as shared cover fallback — posts have no per-item image.
 	bannerImg := ""
-	if len(result.Data.Content.Banners) > 0 {
-		bannerImg = result.Data.Content.Banners[0].Image.URL
+	if len(*result.Data.Content.Banners) > 0 {
+		bannerImg, _ = linkpolicy.ImageURL("official", (*result.Data.Content.Banners)[0].Image.URL)
 	}
 
-	items := make([]NewsItem, 0, len(result.Data.Content.Posts))
-	for _, p := range result.Data.Content.Posts {
+	items := make([]NewsItem, 0, len(*result.Data.Content.Posts))
+	seen := make(map[string]bool)
+	for _, p := range *result.Data.Content.Posts {
+		if !linkpolicy.OfficialID(p.ID) || seen[p.ID] || !textLimit(p.Title, 512) || stripHTML(p.Title) == "" {
+			continue
+		}
+		safeLink, err := linkpolicy.NewsURL("official", p.ID, p.Link)
+		if err != nil {
+			continue
+		}
 		ourType, ok := postTypeMap[p.Type]
 		if !ok {
 			continue
 		}
 		ts, isoDate := parseMonthDay(p.Date)
+		if ts == 0 || len(p.Date) != 5 {
+			continue
+		}
+		seen[p.ID] = true
 		items = append(items, NewsItem{
 			ID:        p.ID,
 			Title:     stripHTML(p.Title),
 			Intro:     "",
 			Image:     bannerImg,
-			URL:       p.Link,
+			URL:       safeLink,
 			Time:      isoDate,
 			Timestamp: ts,
 			Type:      ourType,
@@ -184,6 +181,7 @@ func (n *NewsService) GetOfficialNews(lang string) (bool, []NewsItem, string) {
 		return items[i].Timestamp > items[j].Timestamp
 	})
 
+	n.rememberImages("official", items)
 	return true, items, ""
 }
 
@@ -192,32 +190,20 @@ func (n *NewsService) GetOfficialNews(lang string) (bool, []NewsItem, string) {
 // GetCustomNews fetches server announcements from the Cyrene website API
 // (constant.AnnouncementUrl), which returns a plain []NewsItem array with
 // pinned posts first.
-func (n *NewsService) GetCustomNews() (bool, []NewsItem, string) {
+func (n *NewsService) GetCustomNews(ctx context.Context) (bool, []NewsItem, string) {
 	src := constant.AnnouncementUrl
 	if src == "" {
 		return false, nil, "ANNOUNCEMENT_URL_NOT_CONFIGURED"
 	}
 
-	body, err := httpGet(src, map[string]string{
-		"Accept":     "application/json",
-		"User-Agent": "CyreneLauncher/" + constant.CurrentLauncherVersion,
-	})
+	body, _, err := n.read(ctx, src, registerLimit, false)
 	if err != nil {
 		return false, nil, err.Error()
 	}
 
-	var items []NewsItem
-	if err := json.Unmarshal(body, &items); err != nil {
-		return false, nil, "unsupported response format: " + err.Error()
-	}
-	for i := range items {
-		items[i].Title = stripHTML(items[i].Title)
-		items[i].Intro = stripHTML(items[i].Intro)
-		if items[i].Timestamp == 0 && items[i].Time != "" {
-			if t, err := time.Parse("2006-01-02", items[i].Time); err == nil {
-				items[i].Timestamp = t.Unix()
-			}
-		}
+	items, err := customItems(body)
+	if err != nil {
+		return false, nil, err.Error()
 	}
 	sort.SliceStable(items, func(i, j int) bool {
 		if items[i].Pinned != items[j].Pinned {
@@ -225,5 +211,6 @@ func (n *NewsService) GetCustomNews() (bool, []NewsItem, string) {
 		}
 		return items[i].Timestamp > items[j].Timestamp
 	})
+	n.rememberImages("register", items)
 	return true, items, ""
 }
