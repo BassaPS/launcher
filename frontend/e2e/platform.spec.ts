@@ -22,9 +22,9 @@ function statusFixture() {
 }
 function releaseFixture(assetState = 'not_provided') {
   return { latest: { id: 1, tag: 'First', version: 'v9.0.0', name: 'Fixture release', publishedAt: now,
-    url: 'https://github.com/BassaPS/bassaPSLauncher/releases/tag/First' } as { id: number; tag: string; version: string; name: string; publishedAt: string; url: string } | null,
+    url: 'https://github.com/BassaPS/launcher/releases/tag/First' } as { id: number; tag: string; version: string; name: string; publishedAt: string; url: string } | null,
     recommendedAsset: assetState === 'available' ? { id: 2, name: 'BASSAPSLauncher-fixture-windows-x64.zip', size: 1024,
-      url: 'https://github.com/BassaPS/bassaPSLauncher/releases/download/First/BASSAPSLauncher-fixture-windows-x64.zip', digest: 'sha256:' + 'a'.repeat(64) } : null,
+      url: 'https://github.com/BassaPS/launcher/releases/download/First/BASSAPSLauncher-fixture-windows-x64.zip', digest: 'sha256:' + 'a'.repeat(64) } : null,
     assetState, fetchedAt: now, stale: false, downloadUrl: 'https://download.bassaps.com/' };
 }
 
@@ -183,7 +183,7 @@ test('all fixed service links and Releases use OpenURL; navigation shares resour
   await page.locator('.bassaps-sidebar').getByRole('link', { name: 'このアプリについて' }).click();
   await expect(releaseCard(page).getByText('v9.0.0')).toBeVisible();
   await releaseCard(page).getByRole('button', { name: 'GitHub Releases' }).click();
-  expect(backend.opened.at(-1)).toBe('https://github.com/BassaPS/bassaPSLauncher/releases');
+  expect(backend.opened.at(-1)).toBe('https://github.com/BassaPS/launcher/releases');
   await page.locator('.bassaps-sidebar').getByRole('link', { name: 'ホーム', exact: true }).click();
   await expect(card(page)).toBeVisible();
   expect(backend.calls.filter(id => id === statusID)).toHaveLength(1);

@@ -3,6 +3,12 @@
 Cyrene Launcherをベースにした、Go / Wails v3 / React製のゲームランチャーです。
 ゲーム選択・起動、プロキシ、ローカルサーバー、パッチ、更新、リモートコンソールの既存処理を利用しています。
 
+## 公式リポジトリと配布元
+
+開発元は [BassaPS/launcher](https://github.com/BassaPS/launcher)、配布先は同リポジトリの [Releases](https://github.com/BassaPS/launcher/releases) です。移行前の [BassaPS/bassaPSLauncher](https://github.com/BassaPS/bassaPSLauncher) と公開済みReleaseは履歴参照用に維持します。
+
+このプロジェクトは [Mar7thDev/CyreneLauncher](https://github.com/Mar7thDev/CyreneLauncher) を基にしています。既存のGit履歴、MITライセンス、著作権表示を保持します。配布元の移行によってゲーム接続先やアカウントの保存先は変わりません。自己更新は引き続き無効です。
+
 ## UIと接続先
 
 - ライト／ダーク／OS連動テーマ、ニュートラルな配色、レスポンシブなサイドバーを採用。

@@ -44,9 +44,9 @@ export default function Credits() {
             BASSAPS Launcherは、Mar7thDev / Cyrene
             Launcherをベースにしています。
           </p>
-          <button className="bassaps-source-link" onClick={() => AppService.OpenURL("https://github.com/BassaPS/bassaPSLauncher")}>
+          <button className="bassaps-source-link" onClick={() => AppService.OpenURL("https://github.com/BassaPS/launcher")}>
             <ExternalLink size={14} />
-            github.com/BassaPS/bassaPSLauncher
+            github.com/BassaPS/launcher
           </button>
           <button className="bassaps-source-link" onClick={openSource}>
             <ExternalLink size={14} />

@@ -24,9 +24,9 @@ function status() {
 }
 function release(assetState = 'not_provided') {
   return { latest: { id: 1, tag: 'First', version: 'v1.1.2', name: 'Launcher', publishedAt: time,
-    url: 'https://github.com/BassaPS/bassaPSLauncher/releases/tag/First' },
+    url: 'https://github.com/BassaPS/launcher/releases/tag/First' },
     recommendedAsset: assetState === 'available' ? { id: 2, name: 'Launcher.zip', size: 100,
-      url: 'https://github.com/BassaPS/bassaPSLauncher/releases/download/First/Launcher.zip', digest: null } : null,
+      url: 'https://github.com/BassaPS/launcher/releases/download/First/Launcher.zip', digest: null } : null,
     assetState, fetchedAt: time, stale: false, downloadUrl: 'https://download.bassaps.com/' };
 }
 

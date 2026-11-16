@@ -49,6 +49,6 @@ Get-FileHash -LiteralPath .\BASSAPSLauncher-1.2.0-windows-x64.zip -Algorithm SHA
 - 今回のパッケージ検証で実ゲーム接続・Relay・CA導入・全ゲーム互換性は確認していません。
 - API障害やキャッシュ経過時は取得失敗・古い情報として表示します。未監視UDPを正常と判定しません。
 
-ソース: https://github.com/BassaPS/bassaPSLauncher
+ソース: https://github.com/BassaPS/launcher
 
 正式Web: https://bassaps.com/ / https://register.bassaps.com/ / https://download.bassaps.com/ / https://docs.bassaps.com/ / https://status.bassaps.com/

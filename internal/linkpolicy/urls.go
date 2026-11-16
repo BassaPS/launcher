@@ -134,7 +134,7 @@ func WebURL(raw string) (string, error) {
 		"bassaps.com": {"", "/news"}, "download.bassaps.com": {""},
 		"docs.bassaps.com": {""}, "status.bassaps.com": {""},
 		"register.bassaps.com":     {"", "/register", "/profile"},
-		"github.com":               {"/BassaPS/bassaPSLauncher", "/BassaPS/bassaPSLauncher/releases", "/Mar7thDev/CyreneLauncher", "/hessiser/veritas/wiki"},
+		"github.com":               {"/BassaPS/launcher", "/BassaPS/launcher/releases", "/BassaPS/bassaPSLauncher", "/BassaPS/bassaPSLauncher/releases", "/Mar7thDev/CyreneLauncher", "/hessiser/veritas/wiki"},
 		"sranalysis.punklorde.org": {""}, "srtools.punklorde.org": {""}, "srtools.neonteam.dev": {""},
 	}
 	for _, p := range allowed[u.Host] {

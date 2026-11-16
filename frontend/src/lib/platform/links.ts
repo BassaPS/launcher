@@ -7,7 +7,7 @@ export const platformLinks = {
   docs: 'https://docs.bassaps.com/',
   status: 'https://status.bassaps.com/',
   account: 'https://register.bassaps.com/',
-  releases: 'https://github.com/BassaPS/bassaPSLauncher/releases',
+  releases: 'https://github.com/BassaPS/launcher/releases',
 } as const;
 
 export const serviceLinkIDs = ['portal', 'news', 'download', 'docs', 'status', 'account'] as const;

@@ -27,7 +27,7 @@ Cyrene Launcher / Mar7thDev をベースにしています。
 Copyright (c) 2025 Firefly Shelter
 MITの全文はLICENSE、UIライブラリのライセンスはlicenses/に同梱しています。
 
-Source: https://github.com/BassaPS/bassaPSLauncher
+Source: https://github.com/BassaPS/launcher
 Upstream: https://github.com/Mar7thDev/CyreneLauncher
 
 この配布物は署名されていません。配布元とSHA256SUMS.txtを確認してください。

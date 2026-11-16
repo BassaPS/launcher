@@ -78,7 +78,7 @@ const AnnouncementUrl = WebBaseURL + "/api/launcher/news"
 // Project metadata for the About section
 const ProjectName = "BASSAPS Launcher"
 const ProjectAuthor = "Firefly Shelter (original) · Cyrene (fork)"
-const ProjectRepoUrl = "https://github.com/BassaPS/bassaPSLauncher"
+const ProjectRepoUrl = "https://github.com/BassaPS/launcher"
 
 type ToolFile string
 

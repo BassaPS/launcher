@@ -56,6 +56,16 @@ func TestNewsSourcesAndURLAttacks(t *testing.T) {
 }
 
 func TestImageAndExistingWebRules(t *testing.T) {
+	for _, raw := range []string{"https://github.com/BassaPS/launcher", "https://github.com/BassaPS/launcher/releases"} {
+		if _, err := WebURL(raw); err != nil {
+			t.Fatalf("new repository link rejected: %s: %v", raw, err)
+		}
+	}
+	for _, raw := range []string{"https://github.com/BassaPS/launcher-evil", "https://github.com/BassaPS/launcher/releases?redirect=1"} {
+		if _, err := WebURL(raw); err == nil {
+			t.Fatalf("repository link boundary bypass: %s", raw)
+		}
+	}
 	for _, source := range []string{"register", "official"} {
 		if _, err := ImageURL(source, ""); err != nil {
 			t.Fatal(err)

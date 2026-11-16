@@ -44,8 +44,15 @@ func trustedURL(value, suffix string) bool {
 		u.User != nil || u.Opaque != "" || u.RawQuery != "" || u.ForceQuery || strings.Contains(value, "#") || strings.Contains(u.Path, "\\") {
 		return false
 	}
-	const prefix = "/BassaPS/bassaPSLauncher/releases"
-	if len(u.Path) < len(prefix) || !strings.EqualFold(u.Path[:len(prefix)], prefix) || u.Path[len(prefix):] != suffix {
+	matched := false
+	// Keep existing public releases valid while the provider migrates repositories.
+	for _, prefix := range []string{"/BassaPS/launcher/releases", "/BassaPS/bassaPSLauncher/releases"} {
+		if len(u.Path) >= len(prefix) && strings.EqualFold(u.Path[:len(prefix)], prefix) && u.Path[len(prefix):] == suffix {
+			matched = true
+			break
+		}
+	}
+	if !matched {
 		return false
 	}
 	for _, part := range strings.Split(u.Path, "/") {

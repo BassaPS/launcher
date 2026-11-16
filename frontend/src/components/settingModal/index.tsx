@@ -9,7 +9,7 @@ import { ExternalLink } from "lucide-react"
 
 const PROJECT_NAME = "BASSAPS Launcher"
 const PROJECT_AUTHOR = "Firefly Shelter (original) · BassaPS (fork)"
-const PROJECT_REPO_URL = "https://github.com/BassaPS/bassaPSLauncher"
+const PROJECT_REPO_URL = "https://github.com/BassaPS/launcher"
 
 export default function SettingModal({
     isOpen,
