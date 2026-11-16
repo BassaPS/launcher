@@ -16,7 +16,7 @@ try {
     # CurrentLauncherVersion is the product version source; reject stale build metadata.
     $buildVersion = [regex]::Match((Get-Content 'build/config.yml' -Raw), '(?m)^  version: "([^"]+)"').Groups[1].Value
     $windowsInfo = Get-Content 'build/windows/info.json' -Raw | ConvertFrom-Json
-    foreach ($metadataVersion in @($buildVersion, $windowsInfo.fixed.file_version, $windowsInfo.fixed.product_version, $windowsInfo.info.'0409'.ProductVersion)) {
+    foreach ($metadataVersion in @($buildVersion, $windowsInfo.fixed.file_version, $windowsInfo.fixed.product_version, $windowsInfo.info.'0000'.ProductVersion, $windowsInfo.info.'0000'.FileVersion)) {
         if ($metadataVersion -cne $version) { throw "Product version mismatch: expected $version, found $metadataVersion" }
     }
     $releaseRoot = Join-Path $repoRoot 'bin/release'
@@ -53,6 +53,11 @@ try {
     }
     node scripts/verify-windows-build.mjs bin/BASSAPSLauncher.exe
     if ($LASTEXITCODE -ne 0) { throw 'Embedded administrator manifest check failed' }
+
+    $binaryInfo = [Diagnostics.FileVersionInfo]::GetVersionInfo((Resolve-Path -LiteralPath 'bin/BASSAPSLauncher.exe').Path)
+    if ($binaryInfo.ProductVersion -cne $version -or $binaryInfo.FileVersion -cne $version) {
+        throw "EXE version resources do not match $version"
+    }
 
     Copy-Item -LiteralPath 'bin/BASSAPSLauncher.exe', 'LICENSE' -Destination $stage
     New-Item -ItemType Directory -Path (Join-Path $stage 'licenses') -Force | Out-Null
