@@ -6,6 +6,7 @@ Windows x64向けRelease構成の配布候補です。公開済みv1.1.2（tag: 
 
 ## 変更点
 
+- CyreneLauncher公式v1.2.5のCyreneHookへ更新。対象ゲームは4.7.51（OSBETAWin4.7.51）で、旧ゲームbuildは動作しない可能性があります。公式告知の簡体字中国語テキスト復元・保存設定が英語へ戻る問題の修正を含むDLLです。実ゲームでの確認は未実施です。
 - HomeにStatus情報、Aboutにインストール版・公開版と推奨配布ZIP情報を追加。HTTP到達性とゲーム接続、未監視・古い情報を区別します。
 - Portal、Account、Download、Documentation、Status、お知らせの正式サービス導線を統合。
 - 運営・公式NewsのHTTP/JSON/日時/URLを検証し、画像を記事IDに対応したGo取得へ限定。形式・byte数・画素数・同時数・cache・表示近傍取得を制限。

@@ -1,5 +1,8 @@
 BASSAPS Launcher 1.2.0 - Windows x64
 
+同梱CyreneHookは公式v1.2.5 / ゲーム4.7.51（OSBETAWin4.7.51）向けです。
+旧ゲームbuildは動作しない可能性があります。実ゲーム互換性は未検証です。
+
 Release構成の配布候補。正式公開判定はLAUNCHER_RELEASE_FINAL_REPORT.mdを参照。
 新旧版は別フォルダーへ展開し、既存Launcherを通常終了してから起動してください。
 配置先を変えてもAPPDATAの設定・保存アカウントは共有されます。
