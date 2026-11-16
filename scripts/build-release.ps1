@@ -13,12 +13,18 @@ try {
     $versionMatch = [regex]::Match((Get-Content 'pkg/constant/constant.go' -Raw), 'const CurrentLauncherVersion = "([^"]+)"')
     if (-not $versionMatch.Success) { throw 'Launcher version not found' }
     $version = $versionMatch.Groups[1].Value
+    # CurrentLauncherVersion is the product version source; reject stale build metadata.
+    $buildVersion = [regex]::Match((Get-Content 'build/config.yml' -Raw), '(?m)^  version: "([^"]+)"').Groups[1].Value
+    $windowsInfo = Get-Content 'build/windows/info.json' -Raw | ConvertFrom-Json
+    foreach ($metadataVersion in @($buildVersion, $windowsInfo.fixed.file_version, $windowsInfo.fixed.product_version, $windowsInfo.info.'0409'.ProductVersion)) {
+        if ($metadataVersion -cne $version) { throw "Product version mismatch: expected $version, found $metadataVersion" }
+    }
     $releaseRoot = Join-Path $repoRoot 'bin/release'
     New-Item -ItemType Directory -Path $releaseRoot -Force | Out-Null
     $stage = Join-Path $releaseRoot ('.staging-' + [guid]::NewGuid().ToString('N'))
     New-Item -ItemType Directory -Path $stage -Force | Out-Null
 
-    npm.cmd ci --prefix frontend
+    npm.cmd ci --ignore-scripts --prefix frontend
     if ($LASTEXITCODE -ne 0) { throw 'Frontend dependency install failed' }
     npm.cmd run lint --prefix frontend
     if ($LASTEXITCODE -ne 0) { throw 'Lint failed' }
@@ -62,7 +68,7 @@ try {
     $zipPath = Join-Path $releaseRoot $zipName
     Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zipPath -Force
     Copy-Item -LiteralPath 'bin/BASSAPSLauncher.exe' -Destination (Join-Path $releaseRoot 'BASSAPSLauncher.exe')
-    Copy-Item -LiteralPath 'docs/release-notes.md' -Destination (Join-Path $releaseRoot 'RELEASE_NOTES.md')
+    Copy-Item -LiteralPath 'docs/release-notes-v1.2.0.md' -Destination (Join-Path $releaseRoot 'RELEASE_NOTES.md')
     $sums = foreach ($name in @($zipName, 'BASSAPSLauncher.exe')) {
         $hash = (Get-FileHash -LiteralPath (Join-Path $releaseRoot $name) -Algorithm SHA256).Hash.ToLowerInvariant()
         "$hash  $name"

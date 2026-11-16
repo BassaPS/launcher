@@ -11,7 +11,7 @@ info:
   description: "BASSAPS Launcher" # The application description
   copyright: "@ 2025, Cyrene" # Copyright text
   comments: "BASSAPS Launcher" # Comments
-  version: "1.1.2" # The application version
+  version: "1.2.0" # The application version
 
 # Dev mode configuration
 dev_mode:

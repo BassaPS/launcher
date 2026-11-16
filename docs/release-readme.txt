@@ -1,4 +1,9 @@
-﻿BASSAPS Launcher - Windows x64
+BASSAPS Launcher 1.2.0 - Windows x64
+
+Release構成の配布候補。正式公開判定はLAUNCHER_RELEASE_FINAL_REPORT.mdを参照。
+新旧版は別フォルダーへ展開し、既存Launcherを通常終了してから起動してください。
+配置先を変えてもAPPDATAの設定・保存アカウントは共有されます。
+SHA256SUMS.txtとBUILD-INFO.txtを確認してください。
 
 使い方
 1. ZIP全体を任意のフォルダーへ展開してください。ZIP内から直接実行しないでください。
@@ -12,7 +17,7 @@ Windows x64とMicrosoft Edge WebView2 Runtimeが必要です。
 
 既存のゲームフォルダーやサーバー設定を上書きしないでください。
 一般ユーザーの管理者コンソール利用はできません。
-自己更新は、BASSAPS専用の配布先が未設定のため無効です。
+本体の自己更新・自動更新通知は無効です。新しいZIPから手動更新してください。
 
 ライセンス
 Cyrene Launcher / Mar7thDev をベースにしています。
