@@ -51,7 +51,7 @@ const HoneyServerGitUrl = "https://api.github.com/repos/Mar7thLover/March7thHone
 const HoneyServerAsset = "win-x64.zip"
 const HoneyServerProdTagPrefix = "prod-"
 
-const CurrentLauncherVersion = "1.2.1"
+const CurrentLauncherVersion = "1.3.0"
 
 // === News module ===
 //
