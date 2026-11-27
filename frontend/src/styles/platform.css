@@ -1,18 +1,18 @@
 /* Status colors from common revision 2026-11-13.2A.1; desktop layout stays local. */
 .bassaps-platform-status,
 .bassaps-platform-release {
-  --platform-ok: #77cba5;
-  --platform-degraded: #edc67d;
-  --platform-outage: #f09999;
-  --platform-maintenance: #a8baf5;
+  --platform-ok: var(--ds-success);
+  --platform-degraded: var(--ds-warning);
+  --platform-outage: var(--ds-error);
+  --platform-maintenance: var(--ds-info);
   align-self: start;
 }
 [data-theme="bassaps-light"] .bassaps-platform-status,
 [data-theme="bassaps-light"] .bassaps-platform-release {
-  --platform-ok: #237752;
-  --platform-degraded: #926511;
-  --platform-outage: #b63838;
-  --platform-maintenance: #425dac;
+  --platform-ok: var(--ds-success);
+  --platform-degraded: var(--ds-warning);
+  --platform-outage: var(--ds-error);
+  --platform-maintenance: var(--ds-info);
 }
 .bassaps-platform-status { padding: 12px; margin-block: 16px; }
 .bassaps-platform-status .bassaps-panel-heading { margin-bottom: 8px; flex-wrap: wrap; }

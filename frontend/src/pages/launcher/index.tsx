@@ -450,6 +450,7 @@ export default function LauncherPage() {
                 <div><h1>ライブラリ</h1><p>ゲームの起動と接続設定</p></div>
                 <BackgroundSelector />
             </header>
+            <section className="bps-launcher-banner" aria-labelledby="launcher-banner-title"><div className="banner-copy"><span className="bps-system">YOUR NEXT ADVENTURE</span><h1 id="launcher-banner-title">Ready to<br/>play?</h1><p>次の冒険を、BASSAPSから。</p></div><img src="/bassaps/orbit.svg" alt="" aria-hidden="true" width="300" height="300"/></section>
             <BentoGrid className="bassaps-library-grid">
                 <MagicCard className="bassaps-game-card" aria-label="選択中のゲーム">
                     <div className={`bassaps-game-cover ${isBackgroundBlackout ? 'is-changing' : ''}`}>

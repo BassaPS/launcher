@@ -12,11 +12,11 @@ interface Particle {
 }
 
 const COLORS = [
-    'rgba(244,114,182,0.35)',  // pink-400
-    'rgba(56,189,248,0.30)',   // sky-400
-    'rgba(167,139,250,0.28)',  // violet-400
-    'rgba(244,114,182,0.20)',
-    'rgba(56,189,248,0.20)',
+    'color-mix(in srgb, var(--ds-primary) 35%, transparent)',  // pink-400
+    'color-mix(in srgb, var(--ds-secondary) 30%, transparent)',   // sky-400
+    'color-mix(in srgb, var(--brand-lavender) 28%, transparent)',  // violet-400
+    'color-mix(in srgb, var(--ds-primary) 20%, transparent)',
+    'color-mix(in srgb, var(--ds-secondary) 20%, transparent)',
 ]
 
 export default function ParticleBackground() {

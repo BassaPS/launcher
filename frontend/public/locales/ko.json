@@ -428,8 +428,8 @@
       "releases": "GitHub Releases"
     },
     "targets": {
-      "m7h-http": "M7H HTTP",
-      "m7h-game": "M7H Game UDP",
+      "m7h-http": "Game Server HTTP",
+      "m7h-game": "Game Server UDP",
       "account": "Account Portal",
       "docs": "Documentation"
     },

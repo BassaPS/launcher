@@ -19,7 +19,7 @@ body {
   background: var(--color-base-200);
   color: var(--color-base-content);
   font-family: var(--font-ui);
-  font-size: var(--font-body);
+  font-size: var(--text-body);
 }
 button,
 a,
@@ -69,14 +69,14 @@ button:disabled {
   place-items: center;
   font-size: 17px;
   font-weight: 700;
-  border: 1px solid #fff;
+  border: 1px solid var(--ds-on-media);
   border-radius: 6px;
 }
 .bassaps-brand strong {
   display: flex;
   align-items: baseline;
   gap: 7px;
-  font-size: var(--font-body);
+  font-size: var(--text-body);
   font-weight: 600;
   letter-spacing: 0.2px;
 }
@@ -252,7 +252,7 @@ button:disabled {
   content: "";
   position: absolute;
   inset: 35% 0 0;
-  background: linear-gradient(transparent, #0b0b0be0);
+  background: linear-gradient(transparent, var(--ds-media-scrim));
   pointer-events: none;
 }
 .bassaps-game-cover-label {
@@ -264,12 +264,12 @@ button:disabled {
 .bassaps-game-cover-label > span {
   font-size: 10px;
   letter-spacing: 1.4px;
-  color: #ddd;
+  color: var(--ds-on-media);
 }
 .bassaps-game-cover-label h2 {
   font-size: 27px;
   font-weight: 600;
-  color: #fff;
+  color: var(--ds-on-media);
   margin-top: 7px;
   letter-spacing: -0.5px;
 }
@@ -622,7 +622,7 @@ button:disabled {
   --wails-draggable: no-drag;
 }
 .bassaps-license-dialog::backdrop {
-  background: #0009;
+  background: var(--ds-scrim);
 }
 .bassaps-license-dialog > header {
   display: flex;
@@ -717,7 +717,7 @@ button:disabled {
   border-right: 1px solid var(--color-base-300);
 }
 .bassaps-mobile-menu::backdrop {
-  background: #0008;
+  background: var(--ds-scrim);
 }
 .bassaps-mobile-menu > header {
   display: flex;
@@ -924,7 +924,7 @@ img {
   --wails-draggable: no-drag;
 }
 .bassaps-modal-frame::backdrop {
-  background: #0009;
+  background: var(--ds-scrim);
 }
 @media (max-width: 480px) {
   .bassaps-window-controls > .dropdown {

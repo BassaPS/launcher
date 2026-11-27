@@ -1,0 +1,92 @@
+{
+  "revision": "2026-11-16.REPO1.1",
+  "services": {
+    "portal": {
+      "name": "BASSAPS Portal",
+      "label": "ホーム",
+      "url": "https://bassaps.com/",
+      "published": true,
+      "order": 10,
+      "description": "BASSAPSのサービスと公開情報をまとめる総合ポータル。"
+    },
+    "register": {
+      "name": "Account Portal",
+      "label": "アカウント",
+      "url": "https://register.bassaps.com/",
+      "published": true,
+      "order": 20,
+      "description": "ゲームアカウントの登録・ログインはこちらから。"
+    },
+    "download": {
+      "name": "Download Center",
+      "label": "ダウンロード",
+      "url": "https://download.bassaps.com/",
+      "published": true,
+      "order": 30,
+      "description": "Launcherのダウンロード、動作環境、公開リリースの案内。"
+    },
+    "docs": {
+      "name": "Documentation",
+      "label": "ドキュメント",
+      "url": "https://docs.bassaps.com/",
+      "published": true,
+      "order": 40,
+      "description": "アカウント登録からLauncherの導入・接続までの利用ガイド。"
+    },
+    "status": {
+      "name": "Status",
+      "label": "ステータス",
+      "url": "https://status.bassaps.com/",
+      "published": true,
+      "order": 50,
+      "description": "監視対象の稼働状況、障害、メンテナンス情報を確認。"
+    }
+  },
+  "navigation": [
+    {
+      "id": "portal",
+      "serviceId": "portal",
+      "label": "ホーム",
+      "url": "https://bassaps.com/"
+    },
+    {
+      "id": "news",
+      "serviceId": "portal",
+      "label": "お知らせ",
+      "url": "https://bassaps.com/news"
+    },
+    {
+      "id": "download",
+      "serviceId": "download",
+      "label": "ダウンロード",
+      "url": "https://download.bassaps.com/"
+    },
+    {
+      "id": "docs",
+      "serviceId": "docs",
+      "label": "ドキュメント",
+      "url": "https://docs.bassaps.com/"
+    },
+    {
+      "id": "status",
+      "serviceId": "status",
+      "label": "ステータス",
+      "url": "https://status.bassaps.com/"
+    },
+    {
+      "id": "register",
+      "serviceId": "register",
+      "label": "アカウント",
+      "url": "https://register.bassaps.com/"
+    }
+  ],
+  "guides": {
+    "gettingStarted": "https://docs.bassaps.com/guide/getting-started"
+  },
+  "distribution": {
+    "organization": "BassaPS",
+    "launcherRepository": "https://github.com/BassaPS/launcher",
+    "launcherReleases": "https://github.com/BassaPS/launcher/releases",
+    "launcherReleasesApi": "https://api.github.com/repos/BassaPS/launcher/releases/latest"
+  }
+}

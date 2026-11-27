@@ -1,0 +1,50 @@
+/* Desktop extension of the same tokens; Wails behavior remains in the app. */
+html body { font-family: var(--font-body); color: var(--ds-text); background: var(--ds-background); font-size: 15px; }
+html body .bassaps-titlebar { background: var(--ds-surface); height: 68px; border-color: var(--ds-border); }
+html body .bassaps-brand { gap: 10px; }
+html body .bassaps-brand strong { font-family: var(--font-display); font-size: 23px; letter-spacing: -.06em; font-weight: 700; }
+html body .bassaps-monogram { background: transparent; border: none; width: 28px; height: 28px; }
+.bassaps-monogram img { display: block; }
+html body .bassaps-sidebar { background: var(--ds-surface); border-color: var(--ds-border); padding: 20px 16px; }
+html body .bassaps-sidebar a { border-radius: var(--shape-control); min-height: 44px; font-size: 14px; }
+html body .bassaps-sidebar a[aria-current=page], html body .bassaps-sidebar a.active { background: var(--ds-elevated); color: var(--ds-link); }
+html body .bassaps-content { background: var(--ds-background); }
+html body .btn { border-radius: var(--shape-control); font-family: var(--font-body); font-weight: 700; }
+html body .btn-primary { color: var(--ds-on-primary); background: var(--ds-primary); border-color: transparent; }
+html body :where(.card, .modal-box, .bassaps-card, .bassaps-platform-status, .bassaps-release) { border-radius: var(--shape-panel); border-color: var(--ds-border); background-color: var(--ds-surface); }
+html body :where(.input, .select, .textarea) { border-radius: var(--shape-control); border-color: var(--ds-outline); }
+html body :where(h1, h2, h3) { font-family: var(--font-display); }
+html body :where(code, pre, .bassaps-platform-rows, .bassaps-version) { font-family: var(--font-mono); }
+html body .bassaps-hero { background: linear-gradient(120deg, color-mix(in srgb, var(--ds-primary), var(--ds-surface) 92%), color-mix(in srgb, var(--ds-secondary), var(--ds-surface) 92%)); border-color: var(--ds-border); border-radius: var(--shape-panel); }
+html body .bassaps-title-label { font: 400 12px/1.5 var(--font-mono); letter-spacing: .08em; color: var(--ds-muted); }
+html body .bassaps-window-controls button { min-width: 40px; min-height: 40px; border-radius: var(--shape-control); }
+html body .bassaps-platform-rows { font-size: 13px; }
+html body .bassaps-platform-rows small { font-size: 12px; }
+html body .text-primary { color: var(--ds-link); }
+html body .modal-backdrop { background: var(--ds-scrim); }
+@media (max-width: 599px) { html body .bassaps-brand strong { font-size: 20px; } html body .bassaps-window-controls { gap: 2px; } }
+
+/* Native-window adaptation of launcher-mockup.html; all game controls stay live. */
+html:root { --sidebar-width: 190px; --titlebar-height: 68px; }
+html body .bassaps-page { padding: 30px; max-width: var(--ds-content-max); }
+html body .bassaps-brand strong { font-style: italic; letter-spacing: -2px; }
+html body .bassaps-sidebar { padding: 20px; }
+html body .bassaps-sidebar a { border: 1px solid var(--ds-border); background: var(--ds-surface); border-radius: var(--shape-small); margin-bottom: 10px; }
+html body .bassaps-sidebar a[aria-current=page], html body .bassaps-sidebar a.active { background: color-mix(in srgb, var(--ds-primary), var(--ds-surface) 65%); color: var(--ds-text); }
+.bps-launcher-banner { position: relative; overflow: hidden; padding: 30px; background: var(--gradient-brand); border-radius: 4px 30px 4px 4px; margin: 0 0 30px; color: var(--brand-light-text); }
+.bps-launcher-banner h1 { font: italic 700 56px/.92 var(--font-display); letter-spacing: -.05em; margin: 25px 0; }
+.bps-launcher-banner p { color: var(--brand-light-text); }
+.bps-launcher-banner .banner-copy { position: relative; z-index: 1; }
+.bps-launcher-banner > img { position: absolute; right: 0; top: 10px; width: 42%; height: 210px; opacity: .75; }
+html body .bassaps-panel, html body .bassaps-game-card { border-radius: var(--shape-panel); border-color: var(--ds-border); }
+html body .bassaps-game-cover { height: 150px; border-radius: var(--shape-panel); }
+html body .bassaps-game-footer { padding-block: 20px; }
+html body .btn-primary { background: var(--gradient-brand); box-shadow: var(--shadow-primary); border: 1px solid var(--ds-border); }
+html body .bassaps-page-heading h1 { font: 500 14px/1.6 var(--font-mono); letter-spacing: .08em; }
+html body .bassaps-sidebar a { padding: 10px; }
+html body .bassaps-library-grid { gap: 16px; }
+html body .bassaps-brand { gap: 2px; color: var(--ds-text); }
+html body .bassaps-brand strong { display: inline; font-size: 25px; color: var(--ds-text); }
+html body .bassaps-brand b { color: var(--brand-pink-ink); }
+html body .bassaps-monogram { width: 18px; height: 18px; color: var(--ds-text); }
+@media (max-width: 759px) { html:root { --sidebar-width: 0px; } html body .bassaps-page { padding: 16px; } .bps-launcher-banner h1 { font-size: 48px; } }

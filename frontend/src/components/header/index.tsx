@@ -97,10 +97,10 @@ export default function Header() {
           <Menu size={19} />
         </button>
         <Link to="/" className="bassaps-brand">
-          <span className="bassaps-monogram">B</span>
           <strong>
-            BASSAPS<span>LAUNCHER</span>
+            BASS<b>APS</b>
           </strong>
+          <svg className="bassaps-monogram" viewBox="0 0 32 32" aria-hidden="true"><use href="/bassaps/icons.svg#brand-star" /></svg>
         </Link>
         <span className="bassaps-title-label">Launcher</span>
         <div className="bassaps-window-controls">

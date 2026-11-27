@@ -64,6 +64,7 @@ try {
     Copy-Item -LiteralPath 'frontend/public/licenses/MagicUI.txt', 'frontend/public/licenses/ObsidianUI.txt' -Destination (Join-Path $stage 'licenses')
     Copy-Item -LiteralPath 'docs/release-readme.txt' -Destination (Join-Path $stage 'README.txt')
     Copy-Item -LiteralPath 'docs/tool-connections.md' -Destination (Join-Path $stage 'TOOL-CONNECTIONS.md')
+    Copy-Item -LiteralPath 'frontend/public/bassaps/licenses.txt' -Destination (Join-Path $stage 'DESIGN_ASSET_LICENSES.txt')
     $commit = git rev-parse HEAD
     if ($LASTEXITCODE -ne 0) { throw 'Could not identify build commit' }
     $dirty = [bool](git status --porcelain --untracked-files=normal)

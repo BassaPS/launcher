@@ -1,4 +1,5 @@
 ﻿import licenseText from "../../../../LICENSE?raw";
+import designLicenses from "../../../public/bassaps/licenses.txt?raw";
 import { ExternalLink } from "lucide-react";
 import { AppService } from "@bindings/cyrene-launcher/internal/app-service";
 import { toast } from "react-toastify";
@@ -52,6 +53,12 @@ export default function AboutPage() {
         </button>
       </section>
       <PlatformRelease />
+      <section className="bassaps-panel">
+        <details>
+          <summary>フォント・デザインアセットのライセンス</summary>
+          <pre className="bassaps-license" tabIndex={0}>{designLicenses}</pre>
+        </details>
+      </section>
       <section className="bassaps-panel">
         <div className="bassaps-panel-heading">
           <h2>MIT License</h2>
