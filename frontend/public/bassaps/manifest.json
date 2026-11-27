@@ -1,10 +1,10 @@
 {
   "revision": "2026-11-27.Y2K.1",
   "files": {
-    "tokens.css": "f7e3cc52aa17a0ab809cec1e7f0b5810b8476ad1dabd0b480d44afa82ef44684",
+    "tokens.css": "661ee0baa7258e14c0853b6e49f22a48cdf4a724070b0166167b25450160d214",
     "tokens.json": "17a401bae0b6aa0bb9c921709b01c47c52ae203027644e2f1404f4f12cfc6682",
     "fonts.css": "c79c0a9936fa96f8d6385654605fbf5f02ded26edc04197d32e4e82e4f815de1",
-    "foundation.css": "e3ef4a7e9ee97f26616676861b2519465c562323ec89088019335a08eb02bd4d",
+    "foundation.css": "3dd78bcad03dc371f0b71ce9a337007124771c6c8ad9ef75ad84e41c0abe0f55",
     "chrome.css": "331f6c354ad759352d147ca263c0d65d19c6d281e52b58fb2fd594881fdf6f21",
     "chrome-style.js": "253b36b91e89d81ab86fe156eda8dba620e735aed0d43350150d35c3db50ccd1",
     "chrome.js": "3eb455114b7850f2503a87ce0d1c33203081cc233d29ea6034e450541102641c",
@@ -13,8 +13,8 @@
     "controller.svg": "3230c241464fd09b84a0e6b7d787cbd0f0348e97da099f141cc613082c5dfada",
     "brand-star.svg": "11ef9bd98fc4aac6f76e957328ccadf067f3301edbf7cae044d5385998e7eca6",
     "icons.svg": "c6a195cd37a4036fd064a4e04f8dca1b71a6a6456e1264acb92dcef742b9a5a3",
-    "web.css": "cde16184b59ff4cc76d2cd1d6fe9cba99184d77c32e5d813fbb8a90e9679c8c6",
-    "launcher.css": "b0ca53f6cb8002eb8ea95abe609c31f31b61de98f0a73afc82ac36489f604ab8",
+    "web.css": "7d1bf881a56399b0bdbcb7caf48bf97334ed6e602cceca538da6daa77dc69e91",
+    "launcher.css": "c1f508e3cd8610cd3e71fc110ae2cb5c41b06f75805255e4f613e382ce6e3b66",
     "licenses.txt": "1db47166c1c02147f970c730bbc7e70bb20de2a7840bbf2321e38ac9f89383be",
     "services.json": "ed6c834f39dce40d99419fe59a1faa20a8e581f6566af566a6f81ca75a716d6f",
     "fonts/fredoka-latin-500-normal.woff2": "7d76e44a94b02894b384fc98c124ccf521d8460bf0e0bbe31c1b6b4be6099620",

@@ -12,7 +12,7 @@ html body .bassaps-content { background: var(--ds-background); }
 html body .btn { border-radius: var(--shape-control); font-family: var(--font-body); font-weight: 700; }
 html body .btn-primary { color: var(--ds-on-primary); background: var(--ds-primary); border-color: transparent; }
 html body :where(.card, .modal-box, .bassaps-card, .bassaps-platform-status, .bassaps-release) { border-radius: var(--shape-panel); border-color: var(--ds-border); background-color: var(--ds-surface); }
-html body :where(.input, .select, .textarea) { border-radius: var(--shape-control); border-color: var(--ds-outline); }
+html body :where(.input, .select, .textarea) { border-radius: var(--shape-small); border-color: var(--ds-outline); }
 html body :where(h1, h2, h3) { font-family: var(--font-display); }
 html body :where(code, pre, .bassaps-platform-rows, .bassaps-version) { font-family: var(--font-mono); }
 html body .bassaps-hero { background: linear-gradient(120deg, color-mix(in srgb, var(--ds-primary), var(--ds-surface) 92%), color-mix(in srgb, var(--ds-secondary), var(--ds-surface) 92%)); border-color: var(--ds-border); border-radius: var(--shape-panel); }
@@ -47,4 +47,5 @@ html body .bassaps-brand { gap: 2px; color: var(--ds-text); }
 html body .bassaps-brand strong { display: inline; font-size: 25px; color: var(--ds-text); }
 html body .bassaps-brand b { color: var(--brand-pink-ink); }
 html body .bassaps-monogram { width: 18px; height: 18px; color: var(--ds-text); }
+html body .modal-box { border-radius: var(--shape-dialog); }
 @media (max-width: 759px) { html:root { --sidebar-width: 0px; } html body .bassaps-page { padding: 16px; } .bps-launcher-banner h1 { font-size: 48px; } }

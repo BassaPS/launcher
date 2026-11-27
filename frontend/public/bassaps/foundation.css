@@ -13,7 +13,7 @@ button:disabled, input:disabled { cursor: not-allowed; opacity: .55; }
 :where(code, pre, kbd, .eyebrow, .small-label, .category, .status-value, .metrics, .bps-system) { font-family: var(--font-mono); }
 :where(h1, h2, h3, h4) { font-family: var(--font-display); font-weight: 700; text-wrap: balance; }
 :where(p, li) { text-wrap: pretty; }
-:where(input:not([type=checkbox]):not([type=radio]):not([type=range]), textarea, select) { color: var(--ds-text); background: var(--ds-surface); border: 1px solid var(--ds-outline); border-radius: var(--shape-control); min-height: 48px; padding: 12px 14px; }
+:where(input:not([type=checkbox]):not([type=radio]):not([type=range]), textarea, select) { color: var(--ds-text); background: var(--ds-surface); border: 1px solid var(--ds-outline); border-radius: var(--shape-small); min-height: 48px; padding: 12px 14px; }
 :where(input, textarea)::placeholder { color: var(--ds-muted); opacity: 1; }
 :where(input, textarea)[aria-invalid=true] { border-color: var(--ds-error); }
 :where(input[type=checkbox], input[type=radio], progress) { accent-color: var(--ds-link); }
