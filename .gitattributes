@@ -6,3 +6,4 @@ src/platform-header/PlatformHeader.tsx -text
 docs/design/reference/** -text
 DESIGN.md -text
 *.woff2 binary
+frontend/src/routeTree.gen.ts text eol=lf
