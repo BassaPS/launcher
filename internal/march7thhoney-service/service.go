@@ -20,6 +20,7 @@
 package march7thhoneyService
 
 import (
+	"bytes"
 	accountService "cyrene-launcher/internal/account-service"
 	"cyrene-launcher/pkg/constant"
 	"cyrene-launcher/pkg/injector"
@@ -133,14 +134,18 @@ func (m *March7thHoneyService) Start(gamePath, targetURL string, preferredPort i
 	return true, ""
 }
 
-// ensureDLL writes the embedded DLL bytes to disk if missing, then returns
+// ensureDLL writes the embedded DLL bytes to disk if different, then returns
 // the absolute path. Returns an error if no DLL bytes were embedded.
 func (m *March7thHoneyService) ensureDLL() (string, error) {
+	return m.ensureDLLAt(dllStoragePath)
+}
+
+func (m *March7thHoneyService) ensureDLLAt(path string) (string, error) {
 	if len(m.dllBytes) == 0 {
 		return "", errors.New("CyreneHook.dll is missing from this build — place a compiled DLL at assets/CyreneHook.dll and rebuild")
 	}
 
-	abs, err := filepath.Abs(dllStoragePath)
+	abs, err := filepath.Abs(path)
 	if err != nil {
 		return "", fmt.Errorf("resolve dll path: %w", err)
 	}
@@ -148,7 +153,7 @@ func (m *March7thHoneyService) ensureDLL() (string, error) {
 		return "", fmt.Errorf("mkdir patch dir: %w", err)
 	}
 
-	if info, err := os.Stat(abs); err == nil && info.Size() == int64(len(m.dllBytes)) {
+	if existing, err := os.ReadFile(abs); err == nil && bytes.Equal(existing, m.dllBytes) {
 		return abs, nil
 	}
 	if err := os.WriteFile(abs, m.dllBytes, 0644); err != nil {

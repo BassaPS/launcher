@@ -73,7 +73,7 @@ try {
     $zipPath = Join-Path $releaseRoot $zipName
     Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zipPath -Force
     Copy-Item -LiteralPath 'bin/BASSAPSLauncher.exe' -Destination (Join-Path $releaseRoot 'BASSAPSLauncher.exe')
-    Copy-Item -LiteralPath 'docs/release-notes-v1.2.0.md' -Destination (Join-Path $releaseRoot 'RELEASE_NOTES.md')
+    Copy-Item -LiteralPath "docs/release-notes-v$version.md" -Destination (Join-Path $releaseRoot 'RELEASE_NOTES.md')
     $sums = foreach ($name in @($zipName, 'BASSAPSLauncher.exe')) {
         $hash = (Get-FileHash -LiteralPath (Join-Path $releaseRoot $name) -Algorithm SHA256).Hash.ToLowerInvariant()
         "$hash  $name"
