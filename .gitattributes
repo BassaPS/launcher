@@ -1,0 +1,8 @@
+# Generated and supplied design files have byte-level manifests.
+# Preserve the same bytes on Windows and Linux checkouts.
+public/bassaps/** -text
+frontend/public/bassaps/** -text
+src/platform-header/PlatformHeader.tsx -text
+docs/design/reference/** -text
+DESIGN.md -text
+*.woff2 binary
